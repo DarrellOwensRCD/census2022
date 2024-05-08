@@ -1,0 +1,404 @@
+--------------------------------------------------------------------------------
+Codebook for NHGIS data file 'nhgis0110_ds262_20225_county'
+--------------------------------------------------------------------------------
+ 
+Contents
+    - Data Summary
+    - Data Dictionary
+    - Citation and Use
+ 
+Additional documentation on NHGIS data sources is available at: 
+    https://www.nhgis.org/documentation/tabular-data 
+ 
+--------------------------------------------------------------------------------
+Data Summary
+--------------------------------------------------------------------------------
+ 
+Year:             2018-2022
+Geographic level: County (by State)
+Dataset:          2022 American Community Survey: 5-Year Data [2018-2022, Block Groups & Larger Areas]
+   NHGIS code:    2018_2022_ACS5a
+   NHGIS ID:      ds262
+Breakdown(s):     Geographic Component:
+                     Total area (00)
+Data type(s):     (E) Estimates
+                  (M) Margins of error
+ 
+Tables:
+ 
+1. Total Population
+   Universe:    Total population
+   Source code: B01003
+   NHGIS code:  AQNF
+ 
+2. School Enrollment by Detailed Level of School for the Population 3 Years and Over
+   Universe:    Population 3 years and over
+   Source code: B14007
+   NHGIS code:  AQO9
+ 
+3. Ratio of Income to Poverty Level in the Past 12 Months
+   Universe:    Population for whom poverty status is determined
+   Source code: C17002
+   NHGIS code:  AQPZ
+ 
+4. Median Household Income in the Past 12 Months (in 2022 Inflation-Adjusted Dollars)
+   Universe:    Households
+   Source code: B19013
+   NHGIS code:  AQP6
+ 
+5. Tenure by Occupants per Room
+   Universe:    Occupied housing units
+   Source code: B25014
+   NHGIS code:  AQTO
+ 
+6. Median Gross Rent (Dollars)
+   Universe:    Renter-occupied housing units paying cash rent
+   Source code: B25064
+   NHGIS code:  AQUS
+ 
+7. Gross Rent as a Percentage of Household Income in the Past 12 Months
+   Universe:    Renter-occupied housing units
+   Source code: B25070
+   NHGIS code:  AQUY
+ 
+8. Median Value (Dollars)
+   Universe:    Owner-occupied housing units
+   Source code: B25077
+   NHGIS code:  AQU4
+ 
+9. Housing Costs as a Percentage of Household Income in the Past 12 Months
+   Universe:    Occupied housing units
+   Source code: B25140
+   NHGIS code:  AQVW
+ 
+--------------------------------------------------------------------------------
+Data Dictionary
+--------------------------------------------------------------------------------
+ 
+Context Fields 
+        GISJOIN:     GIS Join Match Code
+        YEAR:        Data File Year
+        STUSAB:      State/US-Abbreviation (USPS)
+        REGIONA:     Region Code
+        DIVISIONA:   Division Code
+        STATE:       State Name
+        STATEA:      State Code
+        COUNTY:      County Name
+        COUNTYA:     County Code
+        COUSUBA:     County Subdivision Code
+        PLACEA:      Place/Remainder Code
+        TRACTA:      Census Tract Code
+        BLKGRPA:     Block Group Code
+        CONCITA:     Consolidated City Code
+        AIANHHA:     American Indian Area/Alaska Native Area/Hawaiian Home Land Code
+        RES_ONLYA:   American Indian Area/Alaska Native Area (Reservation or Statistical Entity Only) Code
+        TRUSTA:      American Indian Area (Off-Reservation Trust Land Only)/Hawaiian Home Land Code
+        AIHHTLI:     American Indian/Hawaiian Home Land Trust Land Indicator
+        AITSA:       Tribal Subdivision/Remainder Code
+        ANRCA:       Alaska Native Regional Corporation Code
+        CBSAA:       Metropolitan Statistical Area/Micropolitan Statistical Area Code
+        CSAA:        Combined Statistical Area Code
+        METDIVA:     Metropolitan Division Code
+        NECTAA:      New England City and Town Area Code
+        CNECTAA:     Combined New England City and Town Area Code
+        NECTADIVA:   New England City and Town Area Division Code
+        UAA:         Urban Area Code
+        CDCURRA:     Congressional District (2023-2025, 118th Congress) Code
+        SLDUA:       State Legislative District (Upper Chamber) Code
+        SLDLA:       State Legislative District (Lower Chamber) Code
+        ZCTA5A:      5-Digit ZIP Code Tabulation Area Code
+        SUBMCDA:     Subminor Civil Division Code
+        SDELMA:      School District (Elementary)/Remainder Code
+        SDSECA:      School District (Secondary)/Remainder Code
+        SDUNIA:      School District (Unified)/Remainder Code
+        PCI:         Metropolitan/Micropolitan Principal City Indicator
+        PUMAA:       Public Use Microdata Area Code
+        GEO_ID:      Census Geographic Area Identifier
+        BTTRA:       Tribal Census Tract Code
+        BTBGA:       Tribal Block Group Code
+        TL_GEO_ID:   TIGER/Line Shapefile Geographic Area Identifier
+ 
+Data Type (E):
+    Estimates
+ 
+        NAME_E:      Geographic Area Full Name
+ 
+    Table 1:     Total Population
+    Universe:    Total population
+    Source code: B01003
+    NHGIS code:  AQNF
+        AQNFE001:    Total
+ 
+    Table 2:     School Enrollment by Detailed Level of School for the Population 3 Years and Over
+    Universe:    Population 3 years and over
+    Source code: B14007
+    NHGIS code:  AQO9
+        AQO9E001:    Total
+        AQO9E002:    Enrolled in school
+        AQO9E003:    Enrolled in school: Enrolled in nursery school, preschool
+        AQO9E004:    Enrolled in school: Enrolled in kindergarten
+        AQO9E005:    Enrolled in school: Enrolled in grade 1
+        AQO9E006:    Enrolled in school: Enrolled in grade 2
+        AQO9E007:    Enrolled in school: Enrolled in grade 3
+        AQO9E008:    Enrolled in school: Enrolled in grade 4
+        AQO9E009:    Enrolled in school: Enrolled in grade 5
+        AQO9E010:    Enrolled in school: Enrolled in grade 6
+        AQO9E011:    Enrolled in school: Enrolled in grade 7
+        AQO9E012:    Enrolled in school: Enrolled in grade 8
+        AQO9E013:    Enrolled in school: Enrolled in grade 9
+        AQO9E014:    Enrolled in school: Enrolled in grade 10
+        AQO9E015:    Enrolled in school: Enrolled in grade 11
+        AQO9E016:    Enrolled in school: Enrolled in grade 12
+        AQO9E017:    Enrolled in school: Enrolled in college, undergraduate years
+        AQO9E018:    Enrolled in school: Graduate or professional school
+        AQO9E019:    Not enrolled in school
+ 
+    Table 3:     Ratio of Income to Poverty Level in the Past 12 Months
+    Universe:    Population for whom poverty status is determined
+    Source code: C17002
+    NHGIS code:  AQPZ
+        AQPZE001:    Total
+        AQPZE002:    Under .50
+        AQPZE003:    .50 to .99
+        AQPZE004:    1.00 to 1.24
+        AQPZE005:    1.25 to 1.49
+        AQPZE006:    1.50 to 1.84
+        AQPZE007:    1.85 to 1.99
+        AQPZE008:    2.00 and over
+ 
+    Table 4:     Median Household Income in the Past 12 Months (in 2022 Inflation-Adjusted Dollars)
+    Universe:    Households
+    Source code: B19013
+    NHGIS code:  AQP6
+        AQP6E001:    Median household income in the past 12 months (in 2022 inflation-adjusted dollars)
+ 
+    Table 5:     Tenure by Occupants per Room
+    Universe:    Occupied housing units
+    Source code: B25014
+    NHGIS code:  AQTO
+        AQTOE001:    Total
+        AQTOE002:    Owner occupied
+        AQTOE003:    Owner occupied: 0.50 or less occupants per room
+        AQTOE004:    Owner occupied: 0.51 to 1.00 occupants per room
+        AQTOE005:    Owner occupied: 1.01 to 1.50 occupants per room
+        AQTOE006:    Owner occupied: 1.51 to 2.00 occupants per room
+        AQTOE007:    Owner occupied: 2.01 or more occupants per room
+        AQTOE008:    Renter occupied
+        AQTOE009:    Renter occupied: 0.50 or less occupants per room
+        AQTOE010:    Renter occupied: 0.51 to 1.00 occupants per room
+        AQTOE011:    Renter occupied: 1.01 to 1.50 occupants per room
+        AQTOE012:    Renter occupied: 1.51 to 2.00 occupants per room
+        AQTOE013:    Renter occupied: 2.01 or more occupants per room
+ 
+    Table 6:     Median Gross Rent (Dollars)
+    Universe:    Renter-occupied housing units paying cash rent
+    Source code: B25064
+    NHGIS code:  AQUS
+        AQUSE001:    Median gross rent
+ 
+    Table 7:     Gross Rent as a Percentage of Household Income in the Past 12 Months
+    Universe:    Renter-occupied housing units
+    Source code: B25070
+    NHGIS code:  AQUY
+        AQUYE001:    Total
+        AQUYE002:    Less than 10.0 percent
+        AQUYE003:    10.0 to 14.9 percent
+        AQUYE004:    15.0 to 19.9 percent
+        AQUYE005:    20.0 to 24.9 percent
+        AQUYE006:    25.0 to 29.9 percent
+        AQUYE007:    30.0 to 34.9 percent
+        AQUYE008:    35.0 to 39.9 percent
+        AQUYE009:    40.0 to 49.9 percent
+        AQUYE010:    50.0 percent or more
+        AQUYE011:    Not computed
+ 
+    Table 8:     Median Value (Dollars)
+    Universe:    Owner-occupied housing units
+    Source code: B25077
+    NHGIS code:  AQU4
+        AQU4E001:    Median value (dollars)
+ 
+    Table 9:     Housing Costs as a Percentage of Household Income in the Past 12 Months
+    Universe:    Occupied housing units
+    Source code: B25140
+    NHGIS code:  AQVW
+        AQVWE001:    Total
+        AQVWE002:    Owned Units with a Mortgage
+        AQVWE003:    Owned Units with a Mortgage: Over 30 Percent
+        AQVWE004:    Owned Units with a Mortgage: Over 50 Percent
+        AQVWE005:    Owned Units with a Mortgage: Not Calculated
+        AQVWE006:    Owned Units without a Mortgage
+        AQVWE007:    Owned Units without a Mortgage: Over 30 Percent
+        AQVWE008:    Owned Units without a Mortgage: Over 50 Percent
+        AQVWE009:    Owned Units without a Mortgage: Not Calculated
+        AQVWE010:    Rented
+        AQVWE011:    Rented: Over 30 Percent
+        AQVWE012:    Rented: Over 50 Percent
+        AQVWE013:    Rented: Not Calculated
+ 
+Data Type (M):
+    Margins of error
+ 
+        NAME_M:      Geographic Area Full Name
+ 
+    Table 1:     Total Population
+    Universe:    Total population
+    Source code: B01003
+    NHGIS code:  AQNF
+        AQNFM001:    Total
+ 
+    Table 2:     School Enrollment by Detailed Level of School for the Population 3 Years and Over
+    Universe:    Population 3 years and over
+    Source code: B14007
+    NHGIS code:  AQO9
+        AQO9M001:    Total
+        AQO9M002:    Enrolled in school
+        AQO9M003:    Enrolled in school: Enrolled in nursery school, preschool
+        AQO9M004:    Enrolled in school: Enrolled in kindergarten
+        AQO9M005:    Enrolled in school: Enrolled in grade 1
+        AQO9M006:    Enrolled in school: Enrolled in grade 2
+        AQO9M007:    Enrolled in school: Enrolled in grade 3
+        AQO9M008:    Enrolled in school: Enrolled in grade 4
+        AQO9M009:    Enrolled in school: Enrolled in grade 5
+        AQO9M010:    Enrolled in school: Enrolled in grade 6
+        AQO9M011:    Enrolled in school: Enrolled in grade 7
+        AQO9M012:    Enrolled in school: Enrolled in grade 8
+        AQO9M013:    Enrolled in school: Enrolled in grade 9
+        AQO9M014:    Enrolled in school: Enrolled in grade 10
+        AQO9M015:    Enrolled in school: Enrolled in grade 11
+        AQO9M016:    Enrolled in school: Enrolled in grade 12
+        AQO9M017:    Enrolled in school: Enrolled in college, undergraduate years
+        AQO9M018:    Enrolled in school: Graduate or professional school
+        AQO9M019:    Not enrolled in school
+ 
+    Table 3:     Ratio of Income to Poverty Level in the Past 12 Months
+    Universe:    Population for whom poverty status is determined
+    Source code: C17002
+    NHGIS code:  AQPZ
+        AQPZM001:    Total
+        AQPZM002:    Under .50
+        AQPZM003:    .50 to .99
+        AQPZM004:    1.00 to 1.24
+        AQPZM005:    1.25 to 1.49
+        AQPZM006:    1.50 to 1.84
+        AQPZM007:    1.85 to 1.99
+        AQPZM008:    2.00 and over
+ 
+    Table 4:     Median Household Income in the Past 12 Months (in 2022 Inflation-Adjusted Dollars)
+    Universe:    Households
+    Source code: B19013
+    NHGIS code:  AQP6
+        AQP6M001:    Median household income in the past 12 months (in 2022 inflation-adjusted dollars)
+ 
+    Table 5:     Tenure by Occupants per Room
+    Universe:    Occupied housing units
+    Source code: B25014
+    NHGIS code:  AQTO
+        AQTOM001:    Total
+        AQTOM002:    Owner occupied
+        AQTOM003:    Owner occupied: 0.50 or less occupants per room
+        AQTOM004:    Owner occupied: 0.51 to 1.00 occupants per room
+        AQTOM005:    Owner occupied: 1.01 to 1.50 occupants per room
+        AQTOM006:    Owner occupied: 1.51 to 2.00 occupants per room
+        AQTOM007:    Owner occupied: 2.01 or more occupants per room
+        AQTOM008:    Renter occupied
+        AQTOM009:    Renter occupied: 0.50 or less occupants per room
+        AQTOM010:    Renter occupied: 0.51 to 1.00 occupants per room
+        AQTOM011:    Renter occupied: 1.01 to 1.50 occupants per room
+        AQTOM012:    Renter occupied: 1.51 to 2.00 occupants per room
+        AQTOM013:    Renter occupied: 2.01 or more occupants per room
+ 
+    Table 6:     Median Gross Rent (Dollars)
+    Universe:    Renter-occupied housing units paying cash rent
+    Source code: B25064
+    NHGIS code:  AQUS
+        AQUSM001:    Median gross rent
+ 
+    Table 7:     Gross Rent as a Percentage of Household Income in the Past 12 Months
+    Universe:    Renter-occupied housing units
+    Source code: B25070
+    NHGIS code:  AQUY
+        AQUYM001:    Total
+        AQUYM002:    Less than 10.0 percent
+        AQUYM003:    10.0 to 14.9 percent
+        AQUYM004:    15.0 to 19.9 percent
+        AQUYM005:    20.0 to 24.9 percent
+        AQUYM006:    25.0 to 29.9 percent
+        AQUYM007:    30.0 to 34.9 percent
+        AQUYM008:    35.0 to 39.9 percent
+        AQUYM009:    40.0 to 49.9 percent
+        AQUYM010:    50.0 percent or more
+        AQUYM011:    Not computed
+ 
+    Table 8:     Median Value (Dollars)
+    Universe:    Owner-occupied housing units
+    Source code: B25077
+    NHGIS code:  AQU4
+        AQU4M001:    Median value (dollars)
+ 
+    Table 9:     Housing Costs as a Percentage of Household Income in the Past 12 Months
+    Universe:    Occupied housing units
+    Source code: B25140
+    NHGIS code:  AQVW
+        AQVWM001:    Total
+        AQVWM002:    Owned Units with a Mortgage
+        AQVWM003:    Owned Units with a Mortgage: Over 30 Percent
+        AQVWM004:    Owned Units with a Mortgage: Over 50 Percent
+        AQVWM005:    Owned Units with a Mortgage: Not Calculated
+        AQVWM006:    Owned Units without a Mortgage
+        AQVWM007:    Owned Units without a Mortgage: Over 30 Percent
+        AQVWM008:    Owned Units without a Mortgage: Over 50 Percent
+        AQVWM009:    Owned Units without a Mortgage: Not Calculated
+        AQVWM010:    Rented
+        AQVWM011:    Rented: Over 30 Percent
+        AQVWM012:    Rented: Over 50 Percent
+        AQVWM013:    Rented: Not Calculated
+ 
+--------------------------------------------------------------------------------
+Citation and Use of NHGIS Data
+--------------------------------------------------------------------------------
+ 
+All persons are granted a limited license to use this documentation and the
+accompanying data, subject to the following conditions:
+
+* REDISTRIBUTION: You will not redistribute the data without permission.
+
+  You may publish a subset of the data to meet journal requirements for accessing 
+  data related to a particular publication. Contact us for permission for any other 
+  redistribution; we will consider requests for free and commercial redistribution.
+
+* CITATION: You will cite NHGIS appropriately.
+
+    * Publications and research reports employing NHGIS data (either tabular or GIS) 
+      should include the following citation:
+
+        Steven Manson, Jonathan Schroeder, David Van Riper, Katherine Knowles, Tracy Kugler, Finn Roberts, and Steven Ruggles.
+        IPUMS National Historical Geographic Information System: Version 18.0 
+        [dataset]. Minneapolis, MN: IPUMS. 2023.
+        http://doi.org/10.18128/D050.V18.0
+
+    * For policy briefs, online resources, or articles in the popular press, we 
+      recommend that you cite the use of NHGIS data as follows:
+
+        IPUMS NHGIS, University of Minnesota, www.nhgis.org.
+
+These terms of use are a legally binding agreement. You can use the data only in 
+accordance with these terms, and any other use is a violation of the agreement. 
+Violations may result in revocation of the agreement and prohibition from using other 
+IPUMS data. If IPUMS or our partners are harmed from your violation, you are 
+responsible for all damages, including reasonable attorney's fees and expenses.
+        
+In addition, we request that users send us a copy of any publications, research
+reports, or educational material making use of the data or documentation.
+
+Send electronic material to: nhgis@umn.edu
+
+Printed matter should be sent to:
+
+    IPUMS NHGIS
+    Institute for Social Research and Data Innovation
+    University of Minnesota
+    50 Willey Hall
+    225 19th Ave S
+    Minneapolis, MN 55455
+

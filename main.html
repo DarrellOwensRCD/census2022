@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Census 2022 Socio-economic Data</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+  type="text/javascript"
+  src="/js/lib/dummy.js"
+
+  ></script>
+
+  <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+  <script type="text/javascript" src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css">
+
+  <style id="compiled-css" type="text/css">
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    h2,
+    h3 {
+      margin: 10px;
+      font-size: 1.2em;
+    }
+    h3 {
+      font-size: 1em;
+    }
+    p {
+      font-size: 0.85em;
+      margin: 10px;
+      text-align: left;
+    }
+    option:disabled {
+     font-family:"Arial Black";
+     background: #bdbdbd;
+     color: black;
+     width: 500px;
+     padding: 5px;
+   }
+   .map-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.8);
+    margin-right: 20px;
+    font-family: Arial, sans-serif;
+    overflow: auto;
+    border-radius: 3px;
+  }
+  .menus{
+    position: fixed;
+    top: 210px;
+    right: 30px;
+  }
+  #firstDropdown {
+    background-color: #FFAA33;
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    width: 230px;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+  }
+  #map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+  #features {
+    top: 0;
+    height: 240px;
+    margin-top: 10px;
+    width: 250px;
+    background-color: #ffffff;
+    outline-color: #0047AB;
+    outline-width: 4px;
+  }
+  #legend {
+    top: 125px;
+    width: 230px;
+    height: 20px;
+    background: linear-gradient(to right, red, white, green);
+    border: 1px solid #ccc;
+  }
+  .legend-text {
+    position: absolute;
+    bottom: -20px;
+    font-size: 12px;
+    color: #333;
+    font-family: Arial, sans-serif;
+  }
+
+  .legend-text:nth-child(1) {
+    left: 0;
+  }
+
+  .legend-text:nth-child(2) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .legend-text:nth-child(3) {
+    right: 0;
+  }
+</style>
+
+<script id="insert"></script>
+
+
+</head>
+<body>
+  <!-- Load the `mapbox-gl-geocoder` plugin. -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
+  <div id="map"></div>
+  <div class="map-overlay" id="features">
+    <div id="pd">
+      <h2>Census 2018 - 2022 Socioeconomics</h2>
+      <p>Select a topic and see each neighborhod's latest Census data on income, rents, home prices and poverty.</p>
+    </div>
+  </div>
+  <div class="menus" id="menu_id">
+    <select id="firstDropdown">
+    <option value="0">Median Household Income</option>
+    <option value="1">Median Rent Level</option>
+    <option value="2">Median Home Value</option>
+    <option value="3">Area Median Income By County</option>
+    <option value="4">Share of Population In Poverty</option>
+    <option value="5">Rent Burdened Households</option>
+    <option value="6">Severely Rent Burdened Households</option>
+    <option value="7">House Payment-Burdened Households</option>
+    <option value="8">Severely House Payment-Burdened Households</option>
+    </select>
+  </div>
+
+
+    <script type="text/javascript">//<![CDATA[
+
+      //Dictionary
+    california_county_fips = {
+        '001': 'Alameda',
+        '003': 'Alpine',
+        '005': 'Amador',
+        '007': 'Butte',
+        '009': 'Calaveras',
+        '011': 'Colusa',
+        '013': 'Contra Costa',
+        '015': 'Del Norte',
+        '017': 'El Dorado',
+        '019': 'Fresno',
+        '021': 'Glenn',
+        '023': 'Humboldt',
+        '025': 'Imperial',
+        '027': 'Inyo',
+        '029': 'Kern',
+        '031': 'Kings',
+        '033': 'Lake',
+        '035': 'Lassen',
+        '037': 'Los Angeles',
+        '039': 'Madera',
+        '041': 'Marin',
+        '043': 'Mariposa',
+        '045': 'Mendocino',
+        '047': 'Merced',
+        '049': 'Modoc',
+        '051': 'Mono',
+        '053': 'Monterey',
+        '055': 'Napa',
+        '057': 'Nevada',
+        '059': 'Orange',
+        '061': 'Placer',
+        '063': 'Plumas',
+        '065': 'Riverside',
+        '067': 'Sacramento',
+        '069': 'San Benito',
+        '071': 'San Bernardino',
+        '073': 'San Diego',
+        '075': 'San Francisco',
+        '077': 'San Joaquin',
+        '079': 'San Luis Obispo',
+        '081': 'San Mateo',
+        '083': 'Santa Barbara',
+        '085': 'Santa Clara',
+        '087': 'Santa Cruz',
+        '089': 'Shasta',
+        '091': 'Sierra',
+        '093': 'Siskiyou',
+        '095': 'Solano',
+        '097': 'Sonoma',
+        '099': 'Stanislaus',
+        '101': 'Sutter',
+        '103': 'Tehama',
+        '105': 'Trinity',
+        '107': 'Tulare',
+        '109': 'Tuolumne',
+        '111': 'Ventura',
+        '113': 'Yolo',
+        '115': 'Yuba'
+    }
+
+    topic={
+      "0": "Median Household Income",
+      "1": "Median Rent Level",
+      "2": "Median Home Value",
+      "3": "Area Median Income By County",
+      "4": "Share of Population In Poverty",
+      "5": "Share of Rent Burdened Households",
+      "6": "Share of Severely Rent Burdened Households",
+      "7": "Share of Payment-burdened Homeowners",
+      "8": "Share of Severely-Payment Burdened Homeowners",
+    }
+      // define access token
+    mapboxgl.accessToken = 'pk.eyJ1IjoiaWRvdGhldGhpbmtpbmciLCJhIjoiY2s4dXR1eDY0MDVvMzNmcTVqbXc1Z2kzaCJ9.VETkhTCLHbBrKn_3RvVEnA';
+      //create map
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/idothethinking/cluhfhhjl01ii01qf6gjk8my2',
+        center: [-122.266,37.801], // starting position
+        zoom: 14, // starting zoom
+      });
+    map.getCanvas().style.cursor = 'default';
+      //Scroll control
+    var nav = new mapboxgl.NavigationControl();
+    map.addControl(nav, 'top-left');
+      // wait for map to load before adjusting it
+    map.on('load', function () {
+     map.addSource("ACS2022", {
+      "url": "mapbox://idothethinking.9gt2jcpx",
+      "type": "vector"
+    });
+     // Outline of Places
+     map.addLayer({
+      'id': 'tract_outlines',
+      'type': 'line',
+      'source': 'ACS2022',
+      'source-layer': "census_tracts_with_places_dat-bkcf2c",
+      'layout': {},
+      'paint': {
+        'line-color': '#000000',
+        'line-width': 1
+      },
+    },
+    'settlement-subdivision-label'
+    );
+    // Median Household Income Layer Rezs at Start
+    map.addLayer({
+      id: "0",
+      type: 'fill',
+      'source' : "ACS2022",
+      'source-layer': "census_tracts_with_places_dat-bkcf2c",
+      'layout': {},
+      'paint': {
+        'fill-color': [
+            "case",
+            [
+              "match",
+              ["get", "median_income"],
+              ["", "NaN"],
+              false,
+              true
+            ],
+            [
+              "interpolate",
+              ["linear"],
+              ["get", "median_income"],
+              10000,
+              "hsla(113, 95%, 20%, 0.82)",
+              25000,
+              "hsl(93, 98%, 41%)",
+              50000,
+              "hsla(55, 100%, 49%, 0.82)",
+              90000,
+              "hsl(0, 100%, 100%)",
+              150000,
+              "hsla(0, 100%, 54%, 0.82)",
+              200000,
+              "hsla(0, 100%, 30%, 0.82)",
+              250000,
+              "hsla(0, 100%, 9%, 0.82)"
+            ],
+            "hsl(121, 1%, 52%)"
+          ],
+        'fill-outline-color':[
+            "interpolate",
+            ["linear"],
+            ["id"],
+            0,
+            "#000000",
+            1,
+            "#000000"
+          ]
+        ,
+        'fill-opacity': 1
+      }
+    },
+    'road-simple'
+    );
+     console.log("Map loaded with all sources");
+   });
+    var selectedLayer = "0";
+    // change info window on hover
+    map.on('mousemove', function (e) {
+      //Should probably add a layer highlighter here, somewhere....
+      var tracts = map.queryRenderedFeatures(e.point,{
+        layers: [selectedLayer]
+      });
+      console.log(selectedLayer)
+      if(tracts.length > 0){
+        // Denote City and Census Tract
+        city = tracts[0]['properties']['PLACE']
+        county = california_county_fips[tracts[0]['properties']['COUNTYFP']]
+        tract_number = tracts[0]['properties']['TRACTCE']
+        // Various Stats
+        college_per = tracts[0]['properties']['college_per']
+        AMI = tracts[0]['properties']['income_county_ratio']
+        income = tracts[0]['properties']['median_income']
+        rent = tracts[0]['properties']['median_rent']
+        value = tracts[0]['properties']['median_value']
+        ow_30 = tracts[0]['properties']['ow_30']
+        ow_50 = tracts[0]['properties']['ow_50']
+        rb_30 = tracts[0]['properties']['rb_30']
+        rb_50 = tracts[0]['properties']['rb_50']
+        poverty = tracts[0]['properties']['poverty_per']
+        //Non Tract Stats / Average size of CA Household is 
+        county_med = 
+        if (selectedLayer == "0"){
+          // Topic
+          // Median Income In Tract: 
+          // Median Income In County: 
+          // Median Income In State:
+          // Median Income in Nation:
+          document.getElementById('pd').innerHTML = 
+        }
+        else if(selectedLayer == "1"){}
+        else if(selectedLayer == "2"){}
+        else if(selectedLayer == "3"){}
+        else if(selectedLayer == "4"){}
+        else if(selectedLayer == "5"){}
+        else if(selectedLayer == "6"){}
+        else if(selectedLayer == "7"){}
+        else{
+
+        }
+
+
+
+
+
+        var persign = "%";
+        if (tracts[0]['properties'][selectedLayer] > 0){
+          var sign = "+";
+          var sign2 = "+"
+        }
+        else{
+          var sign = "";
+          var sign2 = "";
+        }
+        if (tracts[0]['properties'][selectedLayer + '_netper'] === 'This Group Was 0 in 2000'){
+          sign2 = "";
+          persign = "";
+        }
+        document.getElementById('pd').innerHTML = '<p>' + districts[tracts[0]['properties']['GISJOIN']] + '</p><p>' + topic[selectedLayer] + ' (2020): ' +tracts[0]['properties'][selectedLayer + '_2020'] + '</p><p>Change since 2000: '+ sign + tracts[0]['properties'][selectedLayer] + ' ('+ sign2 + tracts[0]['properties'][selectedLayer + '_netper'] + persign + ')</p>' ;
+      }
+    });
+    console.log("Map operating...")
+  </script>
+  <script>
+    var lastLayer = null;
+    const selectElement = document.querySelector('#firstDropdown');
+    selectElement.addEventListener('change', (event) => {
+      console.log(event.target.value)
+      selectedLayer = event.target.value
+      if (lastLayer != selectedLayer){
+        map.removeLayer(lastLayer);
+        if (selectedLayer == "0"){
+          map.addLayer({
+            id: selectedLayer,
+            type: 'fill',
+            'source' : "ACS2022",
+            'source-layer': "census_tracts_with_places_dat-bkcf2c",
+            'layout': {},
+            'paint': {
+              'fill-color': [
+                  "case",
+                  [
+                    "match",
+                    ["get", "median_income"],
+                    ["", "NaN"],
+                    false,
+                    true
+                  ],
+                  [
+                    "interpolate",
+                    ["linear"],
+                    ["get", "median_income"],
+                    10000,
+                    "hsla(113, 95%, 20%, 0.82)",
+                    25000,
+                    "hsl(93, 98%, 41%)",
+                    50000,
+                    "hsla(55, 100%, 49%, 0.82)",
+                    90000,
+                    "hsl(0, 100%, 100%)",
+                    150000,
+                    "hsla(0, 100%, 54%, 0.82)",
+                    200000,
+                    "hsla(0, 100%, 30%, 0.82)",
+                    250000,
+                    "hsla(0, 100%, 9%, 0.82)"
+                  ],
+                  "hsl(121, 1%, 52%)"
+                ],
+              'fill-outline-color':[
+                  "interpolate",
+                  ["linear"],
+                  ["id"],
+                  0,
+                  "#000000",
+                  1,
+                  "#000000"
+                ]
+              ,
+              'fill-opacity': 1
+            }
+          },
+          'road-simple'
+          );
+        }
+        else if (selectedLayer == "1"){
+          map.addLayer({
+            id: selectedLayer,
+            type: 'fill',
+            'source' : "ACS2022",
+            'source-layer': "census_tracts_with_places_dat-bkcf2c",
+            'layout': {},
+            'paint': {
+              'fill-color': [
+                  "case",
+                  [
+                    "match",
+                    ["get", "median_rent"],
+                    ["NaN"],
+                    false,
+                    true
+                  ],
+                  [
+                    "interpolate",
+                    ["linear"],
+                    ["get", "median_rent"],
+                    301,
+                    "hsl(120, 100%, 24%)",
+                    1000,
+                    "hsl(135, 0%, 100%)",
+                    2000,
+                    "hsl(62, 100%, 47%)",
+                    3000,
+                    "hsl(0, 100%, 50%)",
+                    3500,
+                    "hsl(0, 99%, 29%)"
+                  ],
+                  "hsl(121, 1%, 52%)"
+                ],
+              'fill-outline-color':[
+                  "interpolate",
+                  ["linear"],
+                  ["id"],
+                  0,
+                  "#000000",
+                  1,
+                  "#000000"
+                ]
+              ,
+              'fill-opacity': 1
+            }
+          },
+          'road-simple'
+          );
+        }
+        else if (selectedLayer == "2"){
+          map.addLayer({
+            id: selectedLayer,
+            type: 'fill',
+            'source' : "ACS2022",
+            'source-layer': "census_tracts_with_places_dat-bkcf2c",
+            'layout': {},
+            'paint': {
+              'fill-color': [
+                  "case",
+                  [
+                    "match",
+                    ["get", "median_value"],
+                    ["", "NaN"],
+                    false,
+                    true
+                  ],
+                  [
+                    "interpolate",
+                    ["linear"],
+                    ["get", "median_value"],
+                    250000,
+                    "hsl(134, 99%, 24%)",
+                    500000,
+                    "hsl(62, 0%, 100%)",
+                    750000,
+                    "hsl(62, 100%, 47%)",
+                    1000000,
+                    "hsl(0, 100%, 50%)",
+                    1500000,
+                    "hsl(0, 99%, 29%)",
+                    2000000,
+                    "hsl(298, 100%, 48%)"
+                  ],
+                  "hsl(121, 1%, 52%)"
+                ],
+              'fill-outline-color':[
+                  "interpolate",
+                  ["linear"],
+                  ["id"],
+                  0,
+                  "#000000",
+                  1,
+                  "#000000"
+                ]
+              ,
+              'fill-opacity': 1
+            }
+          },
+          'road-simple'
+          );
+        }
+        else if (selectedLayer == "3"){
+          map.addLayer({
+            id: selectedLayer,
+            type: 'fill',
+            'source' : "ACS2022",
+            'source-layer': "census_tracts_with_places_dat-bkcf2c",
+            'layout': {},
+            'paint': {
+              'fill-color': [
+                  "match",
+                  [
+                    "get",
+                    "income_county_ratio"
+                  ],
+                  "NaN",
+                  "#a1a1a1",
+                  [
+                    "interpolate",
+                    ["linear"],
+                    [
+                      "get",
+                      "income_county_ratio"
+                    ],
+                    10,
+                    "hsl(124, 99%, 28%)",
+                    50,
+                    "hsl(111, 81%, 83%)",
+                    100,
+                    "hsl(0, 100%, 100%)",
+                    200,
+                    "hsl(0, 98%, 55%)",
+                    299,
+                    "hsl(0, 100%, 32%)"
+                  ]
+                ],
+              'fill-outline-color':[
+                  "interpolate",
+                  ["linear"],
+                  ["id"],
+                  0,
+                  "#000000",
+                  1,
+                  "#000000"
+                ]
+              ,
+              'fill-opacity': 1
+            }
+          },
+          'road-simple'
+          );
+        }
+        else if (selectedLayer == "4"){
+          map.addLayer({
+            id: selectedLayer,
+            type: 'fill',
+            'source' : "ACS2022",
+            'source-layer': "census_tracts_with_places_dat-bkcf2c",
+            'layout': {},
+            'paint': {
+              'fill-color': [
+                  "interpolate",
+                  ["linear"],
+                  ["get", "poverty_per"],
+                  0,
+                  "hsl(0, 0%, 100%)",
+                  25,
+                  "hsl(53, 100%, 59%)",
+                  50,
+                  "hsl(0, 100%, 49%)",
+                  100,
+                  "hsl(0, 99%, 24%)"
+                ],
+              'fill-outline-color':[
+                  "interpolate",
+                  ["linear"],
+                  ["id"],
+                  0,
+                  "#000000",
+                  1,
+                  "#000000"
+                ]
+              ,
+              'fill-opacity': 1
+            }
+          },
+          'road-simple'
+          );
+        }
+        else if (selectedLayer == "5"){
+          map.addLayer({
+            id: selectedLayer,
+            type: 'fill',
+            'source' : "ACS2022",
+            'source-layer': "census_tracts_with_places_dat-bkcf2c",
+            'layout': {},
+            'paint': {
+              'fill-color': [
+                  "case",
+                  [
+                    "match",
+                    ["get", "rb_30"],
+                    ["NaN"],
+                    false,
+                    true
+                  ],
+                  [
+                    "interpolate",
+                    ["linear"],
+                    ["get", "rb_30"],
+                    0,
+                    "hsl(0, 0%, 100%)",
+                    25,
+                    "hsl(55, 92%, 66%)",
+                    50,
+                    "hsl(37, 95%, 50%)",
+                    75,
+                    "hsl(0, 97%, 52%)",
+                    100,
+                    "hsl(0, 100%, 31%)"
+                  ],
+                  "hsl(0, 0%, 69%)"
+                ],
+              'fill-outline-color':[
+                  "interpolate",
+                  ["linear"],
+                  ["id"],
+                  0,
+                  "#000000",
+                  1,
+                  "#000000"
+                ]
+              ,
+              'fill-opacity': 1
+            }
+          },
+          'road-simple'
+          );}
+        else if (selectedLayer == "6"){
+          map.addLayer({
+            id: selectedLayer,
+            type: 'fill',
+            'source' : "ACS2022",
+            'source-layer': "census_tracts_with_places_dat-bkcf2c",
+            'layout': {},
+            'paint': {
+              'fill-color': [
+                "case",
+                [
+                  "match",
+                  ["get", "rb_50"],
+                  ["NaN"],
+                  false,
+                  true
+                ],
+                [
+                  "interpolate",
+                  ["linear"],
+                  ["get", "rb_50"],
+                  0,
+                  "hsl(0, 0%, 100%)",
+                  25,
+                  "hsl(55, 92%, 66%)",
+                  50,
+                  "hsl(37, 95%, 50%)",
+                  75,
+                  "hsl(0, 97%, 52%)",
+                  100,
+                  "hsl(0, 100%, 31%)"
+                ],
+                "hsl(0, 0%, 69%)"
+              ],
+              'fill-outline-color':[
+                  "interpolate",
+                  ["linear"],
+                  ["id"],
+                  0,
+                  "#000000",
+                  1,
+                  "#000000"
+                ]
+              ,
+              'fill-opacity': 1
+            }
+          },
+          'road-simple'
+          );
+        }
+        else if (selectedLayer == "7"){
+          map.addLayer({
+            id: selectedLayer,
+            type: 'fill',
+            'source' : "ACS2022",
+            'source-layer': "census_tracts_with_places_dat-bkcf2c",
+            'layout': {},
+            'paint': {
+              'fill-color': [
+                  "case",
+                  [
+                    "match",
+                    ["get", "ow_30"],
+                    ["NaN"],
+                    false,
+                    true
+                  ],
+                  [
+                    "interpolate",
+                    ["linear"],
+                    ["get", "ow_30"],
+                    0,
+                    "hsl(0, 0%, 100%)",
+                    25,
+                    "hsl(55, 92%, 66%)",
+                    50,
+                    "hsl(37, 95%, 50%)",
+                    75,
+                    "hsl(0, 97%, 52%)",
+                    100,
+                    "hsl(0, 100%, 31%)"
+                  ],
+                  "hsl(121, 1%, 52%)"
+                ],
+              'fill-outline-color':[
+                  "interpolate",
+                  ["linear"],
+                  ["id"],
+                  0,
+                  "#000000",
+                  1,
+                  "#000000"
+                ]
+              ,
+              'fill-opacity': 1
+            }
+          },
+          'road-simple'
+          );
+        }
+        else{
+          map.addLayer({
+            id: selectedLayer,
+            type: 'fill',
+            'source' : "ACS2022",
+            'source-layer': "census_tracts_with_places_dat-bkcf2c",
+            'layout': {},
+            'paint': {
+              'fill-color': [
+                  "case",
+                  [
+                    "match",
+                    ["get", "ow_50"],
+                    ["NaN"],
+                    false,
+                    true
+                  ],
+                  [
+                    "interpolate",
+                    ["linear"],
+                    ["get", "ow_50"],
+                    0,
+                    "hsl(0, 0%, 100%)",
+                    25,
+                    "hsl(55, 92%, 66%)",
+                    50,
+                    "hsl(37, 95%, 50%)",
+                    75,
+                    "hsl(0, 97%, 52%)",
+                    100,
+                    "hsl(0, 100%, 31%)"
+                  ],
+                  "hsl(121, 1%, 52%)"
+                ],
+              'fill-outline-color':[
+                  "interpolate",
+                  ["linear"],
+                  ["id"],
+                  0,
+                  "#000000",
+                  1,
+                  "#000000"
+                ]
+              ,
+              'fill-opacity': 1
+            }
+          },
+          'road-simple'
+          );
+        }
+
+      }
+      lastLayer = selectedLayer
+    });
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "oyq6pjae"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+</body>
+</html>
+
