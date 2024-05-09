@@ -149,9 +149,11 @@
     <script type="text/javascript">//<![CDATA[
 
       //Dictionary
+  var countyData;
   fetchcountydata().then(data => {
       countyData = data; 
-    }); // Put the rest of the code in this bracket
+    }); 
+  // Put the rest of the code in this bracket
   california_county_fips = {
       '001': 'Alameda',
       '003': 'Alpine',
@@ -229,7 +231,7 @@
     //create map
   var map = new mapboxgl.Map({
       container: 'map', // container id
-      style: 'mapbox://styles/idothethinking/cluhfhhjl01ii01qf6gjk8my2',
+      style: 'mapbox://styles/mapbox/light-v11',
       center: [-122.266,37.801], // starting position
       zoom: 14, // starting zoom
     });
@@ -239,7 +241,7 @@
   map.addControl(nav, 'top-left');
     // wait for map to load before adjusting it
   map.on('load', function () {
-     map.addSource("ACS2022", {
+    map.addSource("ACS2022", {
       "url": "mapbox://idothethinking.9gt2jcpx",
       "type": "vector"
     });
@@ -343,8 +345,7 @@
         // Median Income In County: 
         // Median Income In State:
         // Median Income in Nation:
-        document.getElementById('pd').innerHTML = '<p>Tract';
-        //document.getElementById('pd').innerHTML = '<p>Tract: $' + income + '</p><p>County: $' + countyData[countyfp][8] + '</p><p> State: $91,905</p><p>Nation: $74,580</p>' 
+        document.getElementById('pd').innerHTML = '<p>Tract: $' + income + '</p><p>County: $' + countyData[countyfp][8] + '</p><p> State: $91,905</p><p>Nation: $74,580</p>' 
       }
       else if(selectedLayer == "1"){
         document.getElementById('pd').innerHTML = '<p>Tract';
