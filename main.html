@@ -118,9 +118,9 @@
 
 <script id="insert"></script>
 
-
 </head>
 <body>
+  <script src="fetchcountydata.js"></script>
   <!-- Load the `mapbox-gl-geocoder` plugin. -->
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
@@ -149,99 +149,102 @@
     <script type="text/javascript">//<![CDATA[
 
       //Dictionary
-    california_county_fips = {
-        '001': 'Alameda',
-        '003': 'Alpine',
-        '005': 'Amador',
-        '007': 'Butte',
-        '009': 'Calaveras',
-        '011': 'Colusa',
-        '013': 'Contra Costa',
-        '015': 'Del Norte',
-        '017': 'El Dorado',
-        '019': 'Fresno',
-        '021': 'Glenn',
-        '023': 'Humboldt',
-        '025': 'Imperial',
-        '027': 'Inyo',
-        '029': 'Kern',
-        '031': 'Kings',
-        '033': 'Lake',
-        '035': 'Lassen',
-        '037': 'Los Angeles',
-        '039': 'Madera',
-        '041': 'Marin',
-        '043': 'Mariposa',
-        '045': 'Mendocino',
-        '047': 'Merced',
-        '049': 'Modoc',
-        '051': 'Mono',
-        '053': 'Monterey',
-        '055': 'Napa',
-        '057': 'Nevada',
-        '059': 'Orange',
-        '061': 'Placer',
-        '063': 'Plumas',
-        '065': 'Riverside',
-        '067': 'Sacramento',
-        '069': 'San Benito',
-        '071': 'San Bernardino',
-        '073': 'San Diego',
-        '075': 'San Francisco',
-        '077': 'San Joaquin',
-        '079': 'San Luis Obispo',
-        '081': 'San Mateo',
-        '083': 'Santa Barbara',
-        '085': 'Santa Clara',
-        '087': 'Santa Cruz',
-        '089': 'Shasta',
-        '091': 'Sierra',
-        '093': 'Siskiyou',
-        '095': 'Solano',
-        '097': 'Sonoma',
-        '099': 'Stanislaus',
-        '101': 'Sutter',
-        '103': 'Tehama',
-        '105': 'Trinity',
-        '107': 'Tulare',
-        '109': 'Tuolumne',
-        '111': 'Ventura',
-        '113': 'Yolo',
-        '115': 'Yuba'
-    }
+  fetchcountydata().then(data => {
+      countyData = data; 
+    }); // Put the rest of the code in this bracket
+  california_county_fips = {
+      '001': 'Alameda',
+      '003': 'Alpine',
+      '005': 'Amador',
+      '007': 'Butte',
+      '009': 'Calaveras',
+      '011': 'Colusa',
+      '013': 'Contra Costa',
+      '015': 'Del Norte',
+      '017': 'El Dorado',
+      '019': 'Fresno',
+      '021': 'Glenn',
+      '023': 'Humboldt',
+      '025': 'Imperial',
+      '027': 'Inyo',
+      '029': 'Kern',
+      '031': 'Kings',
+      '033': 'Lake',
+      '035': 'Lassen',
+      '037': 'Los Angeles',
+      '039': 'Madera',
+      '041': 'Marin',
+      '043': 'Mariposa',
+      '045': 'Mendocino',
+      '047': 'Merced',
+      '049': 'Modoc',
+      '051': 'Mono',
+      '053': 'Monterey',
+      '055': 'Napa',
+      '057': 'Nevada',
+      '059': 'Orange',
+      '061': 'Placer',
+      '063': 'Plumas',
+      '065': 'Riverside',
+      '067': 'Sacramento',
+      '069': 'San Benito',
+      '071': 'San Bernardino',
+      '073': 'San Diego',
+      '075': 'San Francisco',
+      '077': 'San Joaquin',
+      '079': 'San Luis Obispo',
+      '081': 'San Mateo',
+      '083': 'Santa Barbara',
+      '085': 'Santa Clara',
+      '087': 'Santa Cruz',
+      '089': 'Shasta',
+      '091': 'Sierra',
+      '093': 'Siskiyou',
+      '095': 'Solano',
+      '097': 'Sonoma',
+      '099': 'Stanislaus',
+      '101': 'Sutter',
+      '103': 'Tehama',
+      '105': 'Trinity',
+      '107': 'Tulare',
+      '109': 'Tuolumne',
+      '111': 'Ventura',
+      '113': 'Yolo',
+      '115': 'Yuba'
+  }
 
-    topic={
-      "0": "Median Household Income",
-      "1": "Median Rent Level",
-      "2": "Median Home Value",
-      "3": "Area Median Income By County",
-      "4": "Share of Population In Poverty",
-      "5": "Share of Rent Burdened Households",
-      "6": "Share of Severely Rent Burdened Households",
-      "7": "Share of Payment-burdened Homeowners",
-      "8": "Share of Severely-Payment Burdened Homeowners",
-    }
-      // define access token
-    mapboxgl.accessToken = 'pk.eyJ1IjoiaWRvdGhldGhpbmtpbmciLCJhIjoiY2s4dXR1eDY0MDVvMzNmcTVqbXc1Z2kzaCJ9.VETkhTCLHbBrKn_3RvVEnA';
-      //create map
-    var map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: 'mapbox://styles/idothethinking/cluhfhhjl01ii01qf6gjk8my2',
-        center: [-122.266,37.801], // starting position
-        zoom: 14, // starting zoom
-      });
-    map.getCanvas().style.cursor = 'default';
-      //Scroll control
-    var nav = new mapboxgl.NavigationControl();
-    map.addControl(nav, 'top-left');
-      // wait for map to load before adjusting it
-    map.on('load', function () {
+  topic={
+    "0": "Median Household Income",
+    "1": "Median Rent Level",
+    "2": "Median Home Value",
+    "3": "Area Median Income By County",
+    "4": "Share of Population In Poverty",
+    "5": "Share of Rent Burdened Households",
+    "6": "Share of Severely Rent Burdened Households",
+    "7": "Share of Payment-burdened Homeowners",
+    "8": "Share of Severely-Payment Burdened Homeowners",
+  }
+    // define access token
+  mapboxgl.accessToken = 'pk.eyJ1IjoiaWRvdGhldGhpbmtpbmciLCJhIjoiY2s4dXR1eDY0MDVvMzNmcTVqbXc1Z2kzaCJ9.VETkhTCLHbBrKn_3RvVEnA';
+    //create map
+  var map = new mapboxgl.Map({
+      container: 'map', // container id
+      style: 'mapbox://styles/idothethinking/cluhfhhjl01ii01qf6gjk8my2',
+      center: [-122.266,37.801], // starting position
+      zoom: 14, // starting zoom
+    });
+  map.getCanvas().style.cursor = 'default';
+    //Scroll control
+  var nav = new mapboxgl.NavigationControl();
+  map.addControl(nav, 'top-left');
+    // wait for map to load before adjusting it
+  map.on('load', function () {
      map.addSource("ACS2022", {
       "url": "mapbox://idothethinking.9gt2jcpx",
       "type": "vector"
     });
      // Outline of Places
-     map.addLayer({
+    map.addLayer({
       'id': 'tract_outlines',
       'type': 'line',
       'source': 'ACS2022',
@@ -308,73 +311,69 @@
     'road-simple'
     );
      console.log("Map loaded with all sources");
-   });
-    var selectedLayer = "0";
-    // change info window on hover
-    map.on('mousemove', function (e) {
-      //Should probably add a layer highlighter here, somewhere....
-      var tracts = map.queryRenderedFeatures(e.point,{
-        layers: [selectedLayer]
-      });
-      console.log(selectedLayer)
-      if(tracts.length > 0){
-        // Denote City and Census Tract
-        city = tracts[0]['properties']['PLACE']
-        county = california_county_fips[tracts[0]['properties']['COUNTYFP']]
-        tract_number = tracts[0]['properties']['TRACTCE']
-        // Various Stats
-        college_per = tracts[0]['properties']['college_per']
-        AMI = tracts[0]['properties']['income_county_ratio']
-        income = tracts[0]['properties']['median_income']
-        rent = tracts[0]['properties']['median_rent']
-        value = tracts[0]['properties']['median_value']
-        ow_30 = tracts[0]['properties']['ow_30']
-        ow_50 = tracts[0]['properties']['ow_50']
-        rb_30 = tracts[0]['properties']['rb_30']
-        rb_50 = tracts[0]['properties']['rb_50']
-        poverty = tracts[0]['properties']['poverty_per']
-        //Non Tract Stats / Average size of CA Household is 
-        county_med = 
-        if (selectedLayer == "0"){
-          // Topic
-          // Median Income In Tract: 
-          // Median Income In County: 
-          // Median Income In State:
-          // Median Income in Nation:
-          document.getElementById('pd').innerHTML = 
-        }
-        else if(selectedLayer == "1"){}
-        else if(selectedLayer == "2"){}
-        else if(selectedLayer == "3"){}
-        else if(selectedLayer == "4"){}
-        else if(selectedLayer == "5"){}
-        else if(selectedLayer == "6"){}
-        else if(selectedLayer == "7"){}
-        else{
-
-        }
-
-
-
-
-
-        var persign = "%";
-        if (tracts[0]['properties'][selectedLayer] > 0){
-          var sign = "+";
-          var sign2 = "+"
-        }
-        else{
-          var sign = "";
-          var sign2 = "";
-        }
-        if (tracts[0]['properties'][selectedLayer + '_netper'] === 'This Group Was 0 in 2000'){
-          sign2 = "";
-          persign = "";
-        }
-        document.getElementById('pd').innerHTML = '<p>' + districts[tracts[0]['properties']['GISJOIN']] + '</p><p>' + topic[selectedLayer] + ' (2020): ' +tracts[0]['properties'][selectedLayer + '_2020'] + '</p><p>Change since 2000: '+ sign + tracts[0]['properties'][selectedLayer] + ' ('+ sign2 + tracts[0]['properties'][selectedLayer + '_netper'] + persign + ')</p>' ;
-      }
+ });
+  var selectedLayer = "0";
+  //Launch CSV
+  map.on('mousemove', function (e) {
+    //Should probably add a layer highlighter here, somewhere....
+    var tracts = map.queryRenderedFeatures(e.point,{
+      layers: [selectedLayer]
     });
-    console.log("Map operating...")
+    console.log(selectedLayer)
+    if(tracts.length > 0){
+      // Denote City and Census Tract
+      city = tracts[0]['properties']['PLACE']
+      countyfp = parseInt(california_county_fips[tracts[0]['properties']['COUNTYFP']])
+      tract_number = tracts[0]['properties']['TRACTCE']
+      // Various Stats
+      college_per = tracts[0]['properties']['college_per']
+      AMI = tracts[0]['properties']['income_county_ratio']
+      income = tracts[0]['properties']['median_income']
+      rent = tracts[0]['properties']['median_rent']
+      value = tracts[0]['properties']['median_value']
+      ow_30 = tracts[0]['properties']['ow_30']
+      ow_50 = tracts[0]['properties']['ow_50']
+      rb_30 = tracts[0]['properties']['rb_30']
+      rb_50 = tracts[0]['properties']['rb_50']
+      poverty = tracts[0]['properties']['poverty_per']
+      //Non Tract Stats / Average size of CA Household is 
+      if (selectedLayer == "0"){
+        // Topic
+        // Median Income In Tract: 
+        // Median Income In County: 
+        // Median Income In State:
+        // Median Income in Nation:
+        document.getElementById('pd').innerHTML = '<p>Tract';
+        //document.getElementById('pd').innerHTML = '<p>Tract: $' + income + '</p><p>County: $' + countyData[countyfp][8] + '</p><p> State: $91,905</p><p>Nation: $74,580</p>' 
+      }
+      else if(selectedLayer == "1"){
+        document.getElementById('pd').innerHTML = '<p>Tract';
+      }
+      else if(selectedLayer == "2"){
+        document.getElementById('pd').innerHTML = '<p>Tract';
+      }
+      else if(selectedLayer == "3"){
+        document.getElementById('pd').innerHTML = '<p>Tract';
+      }
+      else if(selectedLayer == "4"){
+        document.getElementById('pd').innerHTML = '<p>Tract';
+      }
+      else if(selectedLayer == "5"){
+        document.getElementById('pd').innerHTML = '<p>Tract';
+      }
+      else if(selectedLayer == "6"){
+        document.getElementById('pd').innerHTML = '<p>Tract';
+      }
+      else if(selectedLayer == "7"){
+        document.getElementById('pd').innerHTML = '<p>Tract';
+
+      }
+      else{
+        document.getElementById('pd').innerHTML = '<p>Tract';
+      }
+    }
+  });
+  console.log("Map operating...")
   </script>
   <script>
     var lastLayer = null;
