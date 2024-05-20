@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-Codebook for NHGIS data file 'nhgis0110_ds262_20225_county'
+Codebook for NHGIS data file 'nhgis0112_ds262_20225_county'
 --------------------------------------------------------------------------------
  
 Contents
@@ -41,35 +41,40 @@ Tables:
    Source code: C17002
    NHGIS code:  AQPZ
  
-4. Median Household Income in the Past 12 Months (in 2022 Inflation-Adjusted Dollars)
+4. Household Income in the Past 12 Months (in 2022 Inflation-Adjusted Dollars)
+   Universe:    Households
+   Source code: B19001
+   NHGIS code:  AQP5
+ 
+5. Median Household Income in the Past 12 Months (in 2022 Inflation-Adjusted Dollars)
    Universe:    Households
    Source code: B19013
    NHGIS code:  AQP6
  
-5. Tenure by Occupants per Room
+6. Tenure by Occupants per Room
    Universe:    Occupied housing units
    Source code: B25014
    NHGIS code:  AQTO
  
-6. Median Gross Rent (Dollars)
+7. Median Gross Rent (Dollars)
    Universe:    Renter-occupied housing units paying cash rent
    Source code: B25064
    NHGIS code:  AQUS
  
-7. Gross Rent as a Percentage of Household Income in the Past 12 Months
+8. Gross Rent as a Percentage of Household Income in the Past 12 Months
    Universe:    Renter-occupied housing units
    Source code: B25070
    NHGIS code:  AQUY
  
-8. Median Value (Dollars)
+9. Median Value (Dollars)
    Universe:    Owner-occupied housing units
    Source code: B25077
    NHGIS code:  AQU4
  
-9. Housing Costs as a Percentage of Household Income in the Past 12 Months
-   Universe:    Occupied housing units
-   Source code: B25140
-   NHGIS code:  AQVW
+10. Housing Costs as a Percentage of Household Income in the Past 12 Months
+    Universe:    Occupied housing units
+    Source code: B25140
+    NHGIS code:  AQVW
  
 --------------------------------------------------------------------------------
 Data Dictionary
@@ -166,13 +171,35 @@ Data Type (E):
         AQPZE007:    1.85 to 1.99
         AQPZE008:    2.00 and over
  
-    Table 4:     Median Household Income in the Past 12 Months (in 2022 Inflation-Adjusted Dollars)
+    Table 4:     Household Income in the Past 12 Months (in 2022 Inflation-Adjusted Dollars)
+    Universe:    Households
+    Source code: B19001
+    NHGIS code:  AQP5
+        AQP5E001:    Total
+        AQP5E002:    Less than $10,000
+        AQP5E003:    $10,000 to $14,999
+        AQP5E004:    $15,000 to $19,999
+        AQP5E005:    $20,000 to $24,999
+        AQP5E006:    $25,000 to $29,999
+        AQP5E007:    $30,000 to $34,999
+        AQP5E008:    $35,000 to $39,999
+        AQP5E009:    $40,000 to $44,999
+        AQP5E010:    $45,000 to $49,999
+        AQP5E011:    $50,000 to $59,999
+        AQP5E012:    $60,000 to $74,999
+        AQP5E013:    $75,000 to $99,999
+        AQP5E014:    $100,000 to $124,999
+        AQP5E015:    $125,000 to $149,999
+        AQP5E016:    $150,000 to $199,999
+        AQP5E017:    $200,000 or more
+ 
+    Table 5:     Median Household Income in the Past 12 Months (in 2022 Inflation-Adjusted Dollars)
     Universe:    Households
     Source code: B19013
     NHGIS code:  AQP6
         AQP6E001:    Median household income in the past 12 months (in 2022 inflation-adjusted dollars)
  
-    Table 5:     Tenure by Occupants per Room
+    Table 6:     Tenure by Occupants per Room
     Universe:    Occupied housing units
     Source code: B25014
     NHGIS code:  AQTO
@@ -190,13 +217,13 @@ Data Type (E):
         AQTOE012:    Renter occupied: 1.51 to 2.00 occupants per room
         AQTOE013:    Renter occupied: 2.01 or more occupants per room
  
-    Table 6:     Median Gross Rent (Dollars)
+    Table 7:     Median Gross Rent (Dollars)
     Universe:    Renter-occupied housing units paying cash rent
     Source code: B25064
     NHGIS code:  AQUS
         AQUSE001:    Median gross rent
  
-    Table 7:     Gross Rent as a Percentage of Household Income in the Past 12 Months
+    Table 8:     Gross Rent as a Percentage of Household Income in the Past 12 Months
     Universe:    Renter-occupied housing units
     Source code: B25070
     NHGIS code:  AQUY
@@ -212,13 +239,13 @@ Data Type (E):
         AQUYE010:    50.0 percent or more
         AQUYE011:    Not computed
  
-    Table 8:     Median Value (Dollars)
+    Table 9:     Median Value (Dollars)
     Universe:    Owner-occupied housing units
     Source code: B25077
     NHGIS code:  AQU4
         AQU4E001:    Median value (dollars)
  
-    Table 9:     Housing Costs as a Percentage of Household Income in the Past 12 Months
+    Table 10:    Housing Costs as a Percentage of Household Income in the Past 12 Months
     Universe:    Occupied housing units
     Source code: B25140
     NHGIS code:  AQVW
@@ -284,13 +311,35 @@ Data Type (M):
         AQPZM007:    1.85 to 1.99
         AQPZM008:    2.00 and over
  
-    Table 4:     Median Household Income in the Past 12 Months (in 2022 Inflation-Adjusted Dollars)
+    Table 4:     Household Income in the Past 12 Months (in 2022 Inflation-Adjusted Dollars)
+    Universe:    Households
+    Source code: B19001
+    NHGIS code:  AQP5
+        AQP5M001:    Total
+        AQP5M002:    Less than $10,000
+        AQP5M003:    $10,000 to $14,999
+        AQP5M004:    $15,000 to $19,999
+        AQP5M005:    $20,000 to $24,999
+        AQP5M006:    $25,000 to $29,999
+        AQP5M007:    $30,000 to $34,999
+        AQP5M008:    $35,000 to $39,999
+        AQP5M009:    $40,000 to $44,999
+        AQP5M010:    $45,000 to $49,999
+        AQP5M011:    $50,000 to $59,999
+        AQP5M012:    $60,000 to $74,999
+        AQP5M013:    $75,000 to $99,999
+        AQP5M014:    $100,000 to $124,999
+        AQP5M015:    $125,000 to $149,999
+        AQP5M016:    $150,000 to $199,999
+        AQP5M017:    $200,000 or more
+ 
+    Table 5:     Median Household Income in the Past 12 Months (in 2022 Inflation-Adjusted Dollars)
     Universe:    Households
     Source code: B19013
     NHGIS code:  AQP6
         AQP6M001:    Median household income in the past 12 months (in 2022 inflation-adjusted dollars)
  
-    Table 5:     Tenure by Occupants per Room
+    Table 6:     Tenure by Occupants per Room
     Universe:    Occupied housing units
     Source code: B25014
     NHGIS code:  AQTO
@@ -308,13 +357,13 @@ Data Type (M):
         AQTOM012:    Renter occupied: 1.51 to 2.00 occupants per room
         AQTOM013:    Renter occupied: 2.01 or more occupants per room
  
-    Table 6:     Median Gross Rent (Dollars)
+    Table 7:     Median Gross Rent (Dollars)
     Universe:    Renter-occupied housing units paying cash rent
     Source code: B25064
     NHGIS code:  AQUS
         AQUSM001:    Median gross rent
  
-    Table 7:     Gross Rent as a Percentage of Household Income in the Past 12 Months
+    Table 8:     Gross Rent as a Percentage of Household Income in the Past 12 Months
     Universe:    Renter-occupied housing units
     Source code: B25070
     NHGIS code:  AQUY
@@ -330,13 +379,13 @@ Data Type (M):
         AQUYM010:    50.0 percent or more
         AQUYM011:    Not computed
  
-    Table 8:     Median Value (Dollars)
+    Table 9:     Median Value (Dollars)
     Universe:    Owner-occupied housing units
     Source code: B25077
     NHGIS code:  AQU4
         AQU4M001:    Median value (dollars)
  
-    Table 9:     Housing Costs as a Percentage of Household Income in the Past 12 Months
+    Table 10:    Housing Costs as a Percentage of Household Income in the Past 12 Months
     Universe:    Occupied housing units
     Source code: B25140
     NHGIS code:  AQVW
@@ -401,4 +450,3 @@ Printed matter should be sent to:
     50 Willey Hall
     225 19th Ave S
     Minneapolis, MN 55455
-

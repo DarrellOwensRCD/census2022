@@ -39,6 +39,11 @@
       margin: 10px;
       text-align: left;
     }
+    p1 {
+      font-size: 1.05em;
+      margin: 10px;
+      text-align: left;
+    }
     option:disabled {
      font-family:"Arial Black";
      background: #bdbdbd;
@@ -46,6 +51,10 @@
      width: 500px;
      padding: 5px;
    }
+    .wide-break {
+        margin-bottom: 9.5px; /* Adjust the margin as needed for spacing */
+        display: block;
+    }
    .map-overlay {
     position: absolute;
     bottom: 0;
@@ -131,710 +140,261 @@
       <p>Select a topic and see each neighborhod's latest Census data on income, rents, home prices and poverty.</p>
     </div>
   </div>
-  <div class="menus" id="menu_id">
+  <div class="menus" id="layerpicker">
     <select id="firstDropdown">
-    <option value="0">Median Household Income</option>
-    <option value="1">Median Rent Level</option>
-    <option value="2">Median Home Value</option>
-    <option value="3">Area Median Income By County</option>
-    <option value="4">Share of Population In Poverty</option>
-    <option value="5">Rent Burdened Households</option>
-    <option value="6">Severely Rent Burdened Households</option>
-    <option value="7">House Payment-Burdened Households</option>
-    <option value="8">Severely House Payment-Burdened Households</option>
+    <option value="median-income">Median Household Income</option>
+    <option value="median-rent">Median Rent Level</option>
+    <option value="median-value">Median Home Value</option>
+    <option value="area_median_income">Area Median Income By County</option>
+    <option value="poverty_ratio">Share of Population In Poverty</option>
+    <option value="rent_burden_30">Rent Burdened Households</option>
+    <option value="rent_burden_50">Severely Rent Burdened Households</option>
+    <option value="owner_burden_30">House Payment-Burdened Households</option>
+    <option value="owner_burden_50">Severely House Payment-Burdened Households</option>
     </select>
   </div>
-
-
-    <script type="text/javascript">//<![CDATA[
-
+  <script>
       //Dictionary
   var countyData;
   fetchcountydata().then(data => {
       countyData = data; 
-    }); 
-  // Put the rest of the code in this bracket
-  california_county_fips = {
-      '001': 'Alameda',
-      '003': 'Alpine',
-      '005': 'Amador',
-      '007': 'Butte',
-      '009': 'Calaveras',
-      '011': 'Colusa',
-      '013': 'Contra Costa',
-      '015': 'Del Norte',
-      '017': 'El Dorado',
-      '019': 'Fresno',
-      '021': 'Glenn',
-      '023': 'Humboldt',
-      '025': 'Imperial',
-      '027': 'Inyo',
-      '029': 'Kern',
-      '031': 'Kings',
-      '033': 'Lake',
-      '035': 'Lassen',
-      '037': 'Los Angeles',
-      '039': 'Madera',
-      '041': 'Marin',
-      '043': 'Mariposa',
-      '045': 'Mendocino',
-      '047': 'Merced',
-      '049': 'Modoc',
-      '051': 'Mono',
-      '053': 'Monterey',
-      '055': 'Napa',
-      '057': 'Nevada',
-      '059': 'Orange',
-      '061': 'Placer',
-      '063': 'Plumas',
-      '065': 'Riverside',
-      '067': 'Sacramento',
-      '069': 'San Benito',
-      '071': 'San Bernardino',
-      '073': 'San Diego',
-      '075': 'San Francisco',
-      '077': 'San Joaquin',
-      '079': 'San Luis Obispo',
-      '081': 'San Mateo',
-      '083': 'Santa Barbara',
-      '085': 'Santa Clara',
-      '087': 'Santa Cruz',
-      '089': 'Shasta',
-      '091': 'Sierra',
-      '093': 'Siskiyou',
-      '095': 'Solano',
-      '097': 'Sonoma',
-      '099': 'Stanislaus',
-      '101': 'Sutter',
-      '103': 'Tehama',
-      '105': 'Trinity',
-      '107': 'Tulare',
-      '109': 'Tuolumne',
-      '111': 'Ventura',
-      '113': 'Yolo',
-      '115': 'Yuba'
-  }
+      console.log(countyData);
+      // Put the rest of the code in this bracket
+      california_county_fips = {
+          '001': 'Alameda',
+          '003': 'Alpine',
+          '005': 'Amador',
+          '007': 'Butte',
+          '009': 'Calaveras',
+          '011': 'Colusa',
+          '013': 'Contra Costa',
+          '015': 'Del Norte',
+          '017': 'El Dorado',
+          '019': 'Fresno',
+          '021': 'Glenn',
+          '023': 'Humboldt',
+          '025': 'Imperial',
+          '027': 'Inyo',
+          '029': 'Kern',
+          '031': 'Kings',
+          '033': 'Lake',
+          '035': 'Lassen',
+          '037': 'Los Angeles',
+          '039': 'Madera',
+          '041': 'Marin',
+          '043': 'Mariposa',
+          '045': 'Mendocino',
+          '047': 'Merced',
+          '049': 'Modoc',
+          '051': 'Mono',
+          '053': 'Monterey',
+          '055': 'Napa',
+          '057': 'Nevada',
+          '059': 'Orange',
+          '061': 'Placer',
+          '063': 'Plumas',
+          '065': 'Riverside',
+          '067': 'Sacramento',
+          '069': 'San Benito',
+          '071': 'San Bernardino',
+          '073': 'San Diego',
+          '075': 'San Francisco',
+          '077': 'San Joaquin',
+          '079': 'San Luis Obispo',
+          '081': 'San Mateo',
+          '083': 'Santa Barbara',
+          '085': 'Santa Clara',
+          '087': 'Santa Cruz',
+          '089': 'Shasta',
+          '091': 'Sierra',
+          '093': 'Siskiyou',
+          '095': 'Solano',
+          '097': 'Sonoma',
+          '099': 'Stanislaus',
+          '101': 'Sutter',
+          '103': 'Tehama',
+          '105': 'Trinity',
+          '107': 'Tulare',
+          '109': 'Tuolumne',
+          '111': 'Ventura',
+          '113': 'Yolo',
+          '115': 'Yuba'
+      }
 
-  topic={
-    "0": "Median Household Income",
-    "1": "Median Rent Level",
-    "2": "Median Home Value",
-    "3": "Area Median Income By County",
-    "4": "Share of Population In Poverty",
-    "5": "Share of Rent Burdened Households",
-    "6": "Share of Severely Rent Burdened Households",
-    "7": "Share of Payment-burdened Homeowners",
-    "8": "Share of Severely-Payment Burdened Homeowners",
-  }
-    // define access token
-  mapboxgl.accessToken = 'pk.eyJ1IjoiaWRvdGhldGhpbmtpbmciLCJhIjoiY2s4dXR1eDY0MDVvMzNmcTVqbXc1Z2kzaCJ9.VETkhTCLHbBrKn_3RvVEnA';
-    //create map
-  var map = new mapboxgl.Map({
-      container: 'map', // container id
-      style: 'mapbox://styles/mapbox/light-v11',
-      center: [-122.266,37.801], // starting position
-      zoom: 14, // starting zoom
-    });
-  map.getCanvas().style.cursor = 'default';
-    //Scroll control
-  var nav = new mapboxgl.NavigationControl();
-  map.addControl(nav, 'top-left');
-    // wait for map to load before adjusting it
-  map.on('load', function () {
-    map.addSource("ACS2022", {
-      "url": "mapbox://idothethinking.9gt2jcpx",
-      "type": "vector"
-    });
-     // Outline of Places
-    map.addLayer({
-      'id': 'tract_outlines',
-      'type': 'line',
-      'source': 'ACS2022',
-      'source-layer': "census_tracts_with_places_dat-bkcf2c",
-      'layout': {},
-      'paint': {
-        'line-color': '#000000',
-        'line-width': 1
-      },
-    },
-    'settlement-subdivision-label'
-    );
-    // Median Household Income Layer Rezs at Start
-    map.addLayer({
-      id: "0",
-      type: 'fill',
-      'source' : "ACS2022",
-      'source-layer': "census_tracts_with_places_dat-bkcf2c",
-      'layout': {},
-      'paint': {
-        'fill-color': [
-            "case",
-            [
-              "match",
-              ["get", "median_income"],
-              ["", "NaN"],
-              false,
-              true
-            ],
-            [
-              "interpolate",
-              ["linear"],
-              ["get", "median_income"],
-              10000,
-              "hsla(113, 95%, 20%, 0.82)",
-              25000,
-              "hsl(93, 98%, 41%)",
-              50000,
-              "hsla(55, 100%, 49%, 0.82)",
-              90000,
-              "hsl(0, 100%, 100%)",
-              150000,
-              "hsla(0, 100%, 54%, 0.82)",
-              200000,
-              "hsla(0, 100%, 30%, 0.82)",
-              250000,
-              "hsla(0, 100%, 9%, 0.82)"
-            ],
-            "hsl(121, 1%, 52%)"
-          ],
-        'fill-outline-color':[
-            "interpolate",
-            ["linear"],
-            ["id"],
-            0,
-            "#000000",
-            1,
-            "#000000"
-          ]
-        ,
-        'fill-opacity': 1
+      topic={
+        "median-income": "Median Household Income",
+        "median-rent": "Median Rent Level",
+        "median-value": "Median Home Value",
+        "area_median_income": "Area Median Income By County",
+        "poverty_ratio": "Share of Population In Poverty",
+        "rent_burden_30": "Share of Rent Burdened Households",
+        "rent_burden_50": "Share of Severely Rent Burdened Households",
+        "owner_burden_30": "Share of Payment-burdened Homeowners",
+        "owner_burden_50": "Share of Severely-Payment Burdened Homeowners",
       }
-    },
-    'road-simple'
-    );
-     console.log("Map loaded with all sources");
- });
-  var selectedLayer = "0";
-  //Launch CSV
-  map.on('mousemove', function (e) {
-    //Should probably add a layer highlighter here, somewhere....
-    var tracts = map.queryRenderedFeatures(e.point,{
-      layers: [selectedLayer]
-    });
-    console.log(selectedLayer)
-    if(tracts.length > 0){
-      // Denote City and Census Tract
-      city = tracts[0]['properties']['PLACE']
-      countyfp = parseInt(california_county_fips[tracts[0]['properties']['COUNTYFP']])
-      tract_number = tracts[0]['properties']['TRACTCE']
-      // Various Stats
-      college_per = tracts[0]['properties']['college_per']
-      AMI = tracts[0]['properties']['income_county_ratio']
-      income = tracts[0]['properties']['median_income']
-      rent = tracts[0]['properties']['median_rent']
-      value = tracts[0]['properties']['median_value']
-      ow_30 = tracts[0]['properties']['ow_30']
-      ow_50 = tracts[0]['properties']['ow_50']
-      rb_30 = tracts[0]['properties']['rb_30']
-      rb_50 = tracts[0]['properties']['rb_50']
-      poverty = tracts[0]['properties']['poverty_per']
-      //Non Tract Stats / Average size of CA Household is 
-      if (selectedLayer == "0"){
-        // Topic
-        // Median Income In Tract: 
-        // Median Income In County: 
-        // Median Income In State:
-        // Median Income in Nation:
-        document.getElementById('pd').innerHTML = '<p>Tract: $' + income + '</p><p>County: $' + countyData[countyfp][8] + '</p><p> State: $91,905</p><p>Nation: $74,580</p>' 
-      }
-      else if(selectedLayer == "1"){
-        document.getElementById('pd').innerHTML = '<p>Tract';
-      }
-      else if(selectedLayer == "2"){
-        document.getElementById('pd').innerHTML = '<p>Tract';
-      }
-      else if(selectedLayer == "3"){
-        document.getElementById('pd').innerHTML = '<p>Tract';
-      }
-      else if(selectedLayer == "4"){
-        document.getElementById('pd').innerHTML = '<p>Tract';
-      }
-      else if(selectedLayer == "5"){
-        document.getElementById('pd').innerHTML = '<p>Tract';
-      }
-      else if(selectedLayer == "6"){
-        document.getElementById('pd').innerHTML = '<p>Tract';
-      }
-      else if(selectedLayer == "7"){
-        document.getElementById('pd').innerHTML = '<p>Tract';
+      // define access token
+      mapboxgl.accessToken = 'pk.eyJ1IjoiaWRvdGhldGhpbmtpbmciLCJhIjoiY2s4dXR1eDY0MDVvMzNmcTVqbXc1Z2kzaCJ9.VETkhTCLHbBrKn_3RvVEnA';
+        //create map
+      var selectedLayer = "median-income";
+      var map = new mapboxgl.Map({
+          container: 'map', // container id
+          style: 'mapbox://styles/idothethinking/cl7f7ormd000215pa1rk852g1',
+          center: [-122.264,37.812],
+          zoom: 9, // starting zoom
+        });
+      map.getCanvas().style.cursor = 'default';
+        //Scroll control
+      var nav = new mapboxgl.NavigationControl();
+      map.addControl(nav, 'top-left');
+        // wait for map to load before adjusting it
+      let mapLayers = ["median-value", "median-rent", "median-income", "area_median_income",
+        "owner_burden_30", "owner_burden_50", "rent_burden_30", "rent_burden_50", "poverty_ratio"]
+      const selectElement = document.querySelector('#layerpicker');
+      selectElement.addEventListener('change', (event) => {
+        console.log(event.target.value)
+        selectedLayer = event.target.value
+        mapLayers.forEach(l => map.setLayoutProperty(l, "visibility", "none"))
+        map.setLayoutProperty(event.target.value, "visibility", "visible")
+      });
+      map.on('load', function () {
+         // Outline of Places
+        map.addLayer({
+          'id': 'highlight-layer',
+          'type': 'line',
+          'source': "composite",
+          'source-layer': "census_tracts_with_places_dat-bkcf2c",
+          'layout': {},
+          'paint': {
+            'line-color': '#000000',
+            'line-width': 5
+          },
+          filter: ['==','GISJOIN',''],
+        });
+        // Median Household Income Layer Rezs at Start
+         console.log("Map loaded with all sources");
+     });
+      //Launch CSV
+      map.on('mousemove', function (e) {
+        //Should probably add a layer highlighter here, somewhere....
+        var tracts = map.queryRenderedFeatures(e.point,{
+          layers: [selectedLayer]
+        });
+        if(tracts.length > 0){
+          map.setFilter('highlight-layer', ['==', 'GISJOIN', tracts[0].properties.GISJOIN]);
+          // Denote City and Census Tract
+          var city = tracts[0]['properties']['PLACE']
+          var countyfp = parseInt(tracts[0]['properties']['COUNTYFP'])
+          var countyFpStr = tracts[0]['properties']['COUNTYFP']
+          tract_number = tracts[0]['properties']['TRACTCE']
+          // Various Stats
+          var college_per = tracts[0]['properties']['college_per']
+          var AMI = tracts[0]['properties']['income_county_ratio']
+          var income = tracts[0]['properties']['median_income']
+          if (income == "NaN"){
+            income = "Unavailable"
+          }
+          else if (income == 250001){
+            income = "$250,001 Or Higher"
+          }
+          else{
+            income = "$" + income.toLocaleString();
+          }
+          // Median Home Val
+          if (city.includes("Unincorporated")){
+            placeStr = city
+          }
+          else{
+            placeStr = city + ", " + california_county_fips[countyFpStr] + " County"
+          }
+          // Median Rent 
+          var rent = tracts[0]['properties']['median_rent']
+          if (rent == "NaN"){
+            rent= "Unavailable"
+          }
+          else if (rent == 3501){
+            rent = "$3,501 Or Higher"
+          }
+          else{
+            rent = "$" + rent.toLocaleString();
+          }
+          var value = tracts[0]['properties']['median_value']
+          if (value== "NaN"){
+            value= "Unavailable"
+          }
+          else if (value == 2000001){
+            value = "$2 million or higher"
+          }
+          else{
+            value = "$" + value.toLocaleString();
+          }
+          var ow_30 = tracts[0]['properties']['ow_30']
+          if (ow_30 == "NaN"){
+            ow_30 = "Unavailable"
+          }
+          else{
+            ow_30 = String(Math.round(ow_30)) + "%"
+          }
+          var ow_50 = tracts[0]['properties']['ow_50']
+          if (ow_50 == "NaN"){
+            ow_50 = "Unavailable"
+          }
+          else{
+            ow_50 = String(Math.round(ow_50)) + "%"
+          }
+          var rb_30 = tracts[0]['properties']['rb_30']
+          if (rb_30 == "NaN"){
+            rb_30 = "Unavailable"
+          }
+          else{
+            rb_30 = String(Math.round(rb_30)) + "%"
+          }
+          var rb_50 = tracts[0]['properties']['rb_50']
+          if (rb_50  == "NaN"){
+            rb_50 = "Unavailable"
+          }
+          else{
+            rb_50  = String(Math.round(rb_50 )) + "%"
+          }
+          var poverty = tracts[0]['properties']['poverty_per']
+          //Non Tract Stats / Average size of CA Household is 
+          if (selectedLayer == "median-income"){
+            // City, County - TRACT ID
+            // Median Income In Tract: 
+            // Median Income In County: 
+            // Median Income In State:
+            // Median Income in Nation:
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Estimated Median Income of {households} households</i></p><hr><b><p1>Tract: ' + income + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][8])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $91,905</p1><div class="wide-break"></div><p1>Nation: $74,580</p1>' 
+          }
+          else if(selectedLayer == "median-rent"){
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Estimated Median Rents for {} Renters </i></p><hr><b><p1>Tract: ' + rent + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][22])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
+          }
+          else if(selectedLayer == "median-value"){
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Estimated Home value for {} Homeowners  </i></p><hr><b><p1>Tract: ' + value + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][34])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $659,300</p1><div class="wide-break"></div><p1>Nation: $320,900</p1>' 
+          }
+          else if(selectedLayer == "area_median_income"){
+            document.getElementById('pd').innerHTML = '<p>Tract';
+          }
+          else if(selectedLayer == "poverty_ratio"){
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Percentage of People In Federal Poverty </i></p><hr><b><p1>Tract: ' + rent + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][22])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
+          }
+          else if(selectedLayer == "rent_burden_30"){
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Renters Paying More than 30% of Income on Rent </i></p><hr><b><p1>Tract: ' + rb_30 + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][37])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
+          }
+          else if(selectedLayer == "rent_burden_50"){
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Renters Paying More than 50% of Income on Rent  </i></p><hr><b><p1>Tract: ' + rb_50 + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][38])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
+          }
+          else if(selectedLayer == "owner_burden_30"){
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Homeowners Paying More than 30% Of Income on Costs </i></p><hr><b><p1>Tract: ' + ow_30 + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][41])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
 
-      }
-      else{
-        document.getElementById('pd').innerHTML = '<p>Tract';
-      }
-    }
-  });
-  console.log("Map operating...")
+          }
+          else{
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Homeowners Paying More than 50% Of Income on Costs  </i></p><hr><b><p1>Tract: ' + ow_50 + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][42])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
+          }
+        }
+      });
+      console.log("Map operating...")
+  }); 
   </script>
-  <script>
-    var lastLayer = null;
-    const selectElement = document.querySelector('#firstDropdown');
-    selectElement.addEventListener('change', (event) => {
-      console.log(event.target.value)
-      selectedLayer = event.target.value
-      if (lastLayer != selectedLayer){
-        map.removeLayer(lastLayer);
-        if (selectedLayer == "0"){
-          map.addLayer({
-            id: selectedLayer,
-            type: 'fill',
-            'source' : "ACS2022",
-            'source-layer': "census_tracts_with_places_dat-bkcf2c",
-            'layout': {},
-            'paint': {
-              'fill-color': [
-                  "case",
-                  [
-                    "match",
-                    ["get", "median_income"],
-                    ["", "NaN"],
-                    false,
-                    true
-                  ],
-                  [
-                    "interpolate",
-                    ["linear"],
-                    ["get", "median_income"],
-                    10000,
-                    "hsla(113, 95%, 20%, 0.82)",
-                    25000,
-                    "hsl(93, 98%, 41%)",
-                    50000,
-                    "hsla(55, 100%, 49%, 0.82)",
-                    90000,
-                    "hsl(0, 100%, 100%)",
-                    150000,
-                    "hsla(0, 100%, 54%, 0.82)",
-                    200000,
-                    "hsla(0, 100%, 30%, 0.82)",
-                    250000,
-                    "hsla(0, 100%, 9%, 0.82)"
-                  ],
-                  "hsl(121, 1%, 52%)"
-                ],
-              'fill-outline-color':[
-                  "interpolate",
-                  ["linear"],
-                  ["id"],
-                  0,
-                  "#000000",
-                  1,
-                  "#000000"
-                ]
-              ,
-              'fill-opacity': 1
-            }
-          },
-          'road-simple'
-          );
-        }
-        else if (selectedLayer == "1"){
-          map.addLayer({
-            id: selectedLayer,
-            type: 'fill',
-            'source' : "ACS2022",
-            'source-layer': "census_tracts_with_places_dat-bkcf2c",
-            'layout': {},
-            'paint': {
-              'fill-color': [
-                  "case",
-                  [
-                    "match",
-                    ["get", "median_rent"],
-                    ["NaN"],
-                    false,
-                    true
-                  ],
-                  [
-                    "interpolate",
-                    ["linear"],
-                    ["get", "median_rent"],
-                    301,
-                    "hsl(120, 100%, 24%)",
-                    1000,
-                    "hsl(135, 0%, 100%)",
-                    2000,
-                    "hsl(62, 100%, 47%)",
-                    3000,
-                    "hsl(0, 100%, 50%)",
-                    3500,
-                    "hsl(0, 99%, 29%)"
-                  ],
-                  "hsl(121, 1%, 52%)"
-                ],
-              'fill-outline-color':[
-                  "interpolate",
-                  ["linear"],
-                  ["id"],
-                  0,
-                  "#000000",
-                  1,
-                  "#000000"
-                ]
-              ,
-              'fill-opacity': 1
-            }
-          },
-          'road-simple'
-          );
-        }
-        else if (selectedLayer == "2"){
-          map.addLayer({
-            id: selectedLayer,
-            type: 'fill',
-            'source' : "ACS2022",
-            'source-layer': "census_tracts_with_places_dat-bkcf2c",
-            'layout': {},
-            'paint': {
-              'fill-color': [
-                  "case",
-                  [
-                    "match",
-                    ["get", "median_value"],
-                    ["", "NaN"],
-                    false,
-                    true
-                  ],
-                  [
-                    "interpolate",
-                    ["linear"],
-                    ["get", "median_value"],
-                    250000,
-                    "hsl(134, 99%, 24%)",
-                    500000,
-                    "hsl(62, 0%, 100%)",
-                    750000,
-                    "hsl(62, 100%, 47%)",
-                    1000000,
-                    "hsl(0, 100%, 50%)",
-                    1500000,
-                    "hsl(0, 99%, 29%)",
-                    2000000,
-                    "hsl(298, 100%, 48%)"
-                  ],
-                  "hsl(121, 1%, 52%)"
-                ],
-              'fill-outline-color':[
-                  "interpolate",
-                  ["linear"],
-                  ["id"],
-                  0,
-                  "#000000",
-                  1,
-                  "#000000"
-                ]
-              ,
-              'fill-opacity': 1
-            }
-          },
-          'road-simple'
-          );
-        }
-        else if (selectedLayer == "3"){
-          map.addLayer({
-            id: selectedLayer,
-            type: 'fill',
-            'source' : "ACS2022",
-            'source-layer': "census_tracts_with_places_dat-bkcf2c",
-            'layout': {},
-            'paint': {
-              'fill-color': [
-                  "match",
-                  [
-                    "get",
-                    "income_county_ratio"
-                  ],
-                  "NaN",
-                  "#a1a1a1",
-                  [
-                    "interpolate",
-                    ["linear"],
-                    [
-                      "get",
-                      "income_county_ratio"
-                    ],
-                    10,
-                    "hsl(124, 99%, 28%)",
-                    50,
-                    "hsl(111, 81%, 83%)",
-                    100,
-                    "hsl(0, 100%, 100%)",
-                    200,
-                    "hsl(0, 98%, 55%)",
-                    299,
-                    "hsl(0, 100%, 32%)"
-                  ]
-                ],
-              'fill-outline-color':[
-                  "interpolate",
-                  ["linear"],
-                  ["id"],
-                  0,
-                  "#000000",
-                  1,
-                  "#000000"
-                ]
-              ,
-              'fill-opacity': 1
-            }
-          },
-          'road-simple'
-          );
-        }
-        else if (selectedLayer == "4"){
-          map.addLayer({
-            id: selectedLayer,
-            type: 'fill',
-            'source' : "ACS2022",
-            'source-layer': "census_tracts_with_places_dat-bkcf2c",
-            'layout': {},
-            'paint': {
-              'fill-color': [
-                  "interpolate",
-                  ["linear"],
-                  ["get", "poverty_per"],
-                  0,
-                  "hsl(0, 0%, 100%)",
-                  25,
-                  "hsl(53, 100%, 59%)",
-                  50,
-                  "hsl(0, 100%, 49%)",
-                  100,
-                  "hsl(0, 99%, 24%)"
-                ],
-              'fill-outline-color':[
-                  "interpolate",
-                  ["linear"],
-                  ["id"],
-                  0,
-                  "#000000",
-                  1,
-                  "#000000"
-                ]
-              ,
-              'fill-opacity': 1
-            }
-          },
-          'road-simple'
-          );
-        }
-        else if (selectedLayer == "5"){
-          map.addLayer({
-            id: selectedLayer,
-            type: 'fill',
-            'source' : "ACS2022",
-            'source-layer': "census_tracts_with_places_dat-bkcf2c",
-            'layout': {},
-            'paint': {
-              'fill-color': [
-                  "case",
-                  [
-                    "match",
-                    ["get", "rb_30"],
-                    ["NaN"],
-                    false,
-                    true
-                  ],
-                  [
-                    "interpolate",
-                    ["linear"],
-                    ["get", "rb_30"],
-                    0,
-                    "hsl(0, 0%, 100%)",
-                    25,
-                    "hsl(55, 92%, 66%)",
-                    50,
-                    "hsl(37, 95%, 50%)",
-                    75,
-                    "hsl(0, 97%, 52%)",
-                    100,
-                    "hsl(0, 100%, 31%)"
-                  ],
-                  "hsl(0, 0%, 69%)"
-                ],
-              'fill-outline-color':[
-                  "interpolate",
-                  ["linear"],
-                  ["id"],
-                  0,
-                  "#000000",
-                  1,
-                  "#000000"
-                ]
-              ,
-              'fill-opacity': 1
-            }
-          },
-          'road-simple'
-          );}
-        else if (selectedLayer == "6"){
-          map.addLayer({
-            id: selectedLayer,
-            type: 'fill',
-            'source' : "ACS2022",
-            'source-layer': "census_tracts_with_places_dat-bkcf2c",
-            'layout': {},
-            'paint': {
-              'fill-color': [
-                "case",
-                [
-                  "match",
-                  ["get", "rb_50"],
-                  ["NaN"],
-                  false,
-                  true
-                ],
-                [
-                  "interpolate",
-                  ["linear"],
-                  ["get", "rb_50"],
-                  0,
-                  "hsl(0, 0%, 100%)",
-                  25,
-                  "hsl(55, 92%, 66%)",
-                  50,
-                  "hsl(37, 95%, 50%)",
-                  75,
-                  "hsl(0, 97%, 52%)",
-                  100,
-                  "hsl(0, 100%, 31%)"
-                ],
-                "hsl(0, 0%, 69%)"
-              ],
-              'fill-outline-color':[
-                  "interpolate",
-                  ["linear"],
-                  ["id"],
-                  0,
-                  "#000000",
-                  1,
-                  "#000000"
-                ]
-              ,
-              'fill-opacity': 1
-            }
-          },
-          'road-simple'
-          );
-        }
-        else if (selectedLayer == "7"){
-          map.addLayer({
-            id: selectedLayer,
-            type: 'fill',
-            'source' : "ACS2022",
-            'source-layer': "census_tracts_with_places_dat-bkcf2c",
-            'layout': {},
-            'paint': {
-              'fill-color': [
-                  "case",
-                  [
-                    "match",
-                    ["get", "ow_30"],
-                    ["NaN"],
-                    false,
-                    true
-                  ],
-                  [
-                    "interpolate",
-                    ["linear"],
-                    ["get", "ow_30"],
-                    0,
-                    "hsl(0, 0%, 100%)",
-                    25,
-                    "hsl(55, 92%, 66%)",
-                    50,
-                    "hsl(37, 95%, 50%)",
-                    75,
-                    "hsl(0, 97%, 52%)",
-                    100,
-                    "hsl(0, 100%, 31%)"
-                  ],
-                  "hsl(121, 1%, 52%)"
-                ],
-              'fill-outline-color':[
-                  "interpolate",
-                  ["linear"],
-                  ["id"],
-                  0,
-                  "#000000",
-                  1,
-                  "#000000"
-                ]
-              ,
-              'fill-opacity': 1
-            }
-          },
-          'road-simple'
-          );
-        }
-        else{
-          map.addLayer({
-            id: selectedLayer,
-            type: 'fill',
-            'source' : "ACS2022",
-            'source-layer': "census_tracts_with_places_dat-bkcf2c",
-            'layout': {},
-            'paint': {
-              'fill-color': [
-                  "case",
-                  [
-                    "match",
-                    ["get", "ow_50"],
-                    ["NaN"],
-                    false,
-                    true
-                  ],
-                  [
-                    "interpolate",
-                    ["linear"],
-                    ["get", "ow_50"],
-                    0,
-                    "hsl(0, 0%, 100%)",
-                    25,
-                    "hsl(55, 92%, 66%)",
-                    50,
-                    "hsl(37, 95%, 50%)",
-                    75,
-                    "hsl(0, 97%, 52%)",
-                    100,
-                    "hsl(0, 100%, 31%)"
-                  ],
-                  "hsl(121, 1%, 52%)"
-                ],
-              'fill-outline-color':[
-                  "interpolate",
-                  ["linear"],
-                  ["id"],
-                  0,
-                  "#000000",
-                  1,
-                  "#000000"
-                ]
-              ,
-              'fill-opacity': 1
-            }
-          },
-          'road-simple'
-          );
-        }
-
-      }
-      lastLayer = selectedLayer
-    });
-
-
-  //]]></script>
-
   <script>
     // tell the embed parent frame the height of the content
     if (window.parent && window.parent.parent){
