@@ -1,6 +1,6 @@
 
 // Replace 'your-github-username' and 'your-repo' with yourGitHub username and repository name
-const csvUrl = 'https://raw.githubusercontent.com/DarrellOwensRCD/census2022/master/data/county_stats_acs2022.csv';
+const csvUrl = 'https://raw.githubusercontent.com/DarrellOwensRCD/census2022/master/data/nhgis0112_ds262_20225_county.csv';
 
 // Function to fetch and process the CSV file
 async function fetchcountydata() {

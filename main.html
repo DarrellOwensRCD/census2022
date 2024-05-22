@@ -52,7 +52,7 @@
      padding: 5px;
    }
     .wide-break {
-        margin-bottom: 9.5px; /* Adjust the margin as needed for spacing */
+        margin-bottom: 6.5px; /* Adjust the margin as needed for spacing */
         display: block;
     }
    .map-overlay {
@@ -136,8 +136,8 @@
   <div id="map"></div>
   <div class="map-overlay" id="features">
     <div id="pd">
-      <h2>Census 2018 - 2022 Socioeconomics</h2>
-      <p>Select a topic and see each neighborhod's latest Census data on income, rents, home prices and poverty.</p>
+      <h2>Census 2022 (5-Year) Socio-Economics</h2>
+      <p>Select a topic and see each neighborhod's latest Census Bureau data on income, rents, home prices and poverty. Data compiled from 2018 to 2022 by American Community Survey samples. Accuracy is highest in tracts with more housing or people.</p>
     </div>
   </div>
   <div class="menus" id="layerpicker">
@@ -145,7 +145,6 @@
     <option value="median-income">Median Household Income</option>
     <option value="median-rent">Median Rent Level</option>
     <option value="median-value">Median Home Value</option>
-    <option value="area_median_income">Area Median Income By County</option>
     <option value="poverty_ratio">Share of Population In Poverty</option>
     <option value="rent_burden_30">Rent Burdened Households</option>
     <option value="rent_burden_50">Severely Rent Burdened Households</option>
@@ -225,7 +224,6 @@
         "median-income": "Median Household Income",
         "median-rent": "Median Rent Level",
         "median-value": "Median Home Value",
-        "area_median_income": "Area Median Income By County",
         "poverty_ratio": "Share of Population In Poverty",
         "rent_burden_30": "Share of Rent Burdened Households",
         "rent_burden_50": "Share of Severely Rent Burdened Households",
@@ -284,10 +282,14 @@
           // Denote City and Census Tract
           var city = tracts[0]['properties']['PLACE']
           var countyfp = parseInt(tracts[0]['properties']['COUNTYFP'])
+          var households = tracts[0]['properties']['households'].toLocaleString()
+          var homeowners = tracts[0]['properties']['homeowners'].toLocaleString()
+          var renters = tracts[0]['properties']['renters'].toLocaleString()
+          var pop = tracts[0]['properties']['total_pop'].toLocaleString()
           var countyFpStr = tracts[0]['properties']['COUNTYFP']
           tract_number = tracts[0]['properties']['TRACTCE']
           // Various Stats
-          var college_per = tracts[0]['properties']['college_per']
+          var college_per = Math.round(tracts[0]['properties']['college_per'])
           var AMI = tracts[0]['properties']['income_county_ratio']
           var income = tracts[0]['properties']['median_income']
           if (income == "NaN"){
@@ -355,7 +357,12 @@
           else{
             rb_50  = String(Math.round(rb_50 )) + "%"
           }
-          var poverty = tracts[0]['properties']['poverty_per']
+          if (poverty == "NaN"){
+            var poverty = "Unavailable"
+          }
+          else{
+            var poverty = tracts[0]['properties']['poverty_per']
+          }
           //Non Tract Stats / Average size of CA Household is 
           if (selectedLayer == "median-income"){
             // City, County - TRACT ID
@@ -363,32 +370,34 @@
             // Median Income In County: 
             // Median Income In State:
             // Median Income in Nation:
-            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Estimated Median Income of {households} households</i></p><hr><b><p1>Tract: ' + income + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][8])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $91,905</p1><div class="wide-break"></div><p1>Nation: $74,580</p1>' 
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Estimated Median Income of <b>' + households + '</b> households</i></p><hr><b><p1>Tract: ' + income + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][45])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $91,905</p1><div class="wide-break"></div><p1>Nation: $74,580</p1>' 
           }
           else if(selectedLayer == "median-rent"){
-            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Estimated Median Rents for {} Renters </i></p><hr><b><p1>Tract: ' + rent + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][22])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Estimated Median Rents for <b>'+ renters + '</b> renter Households</i></p><hr><b><p1>Tract: ' + rent + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][59])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
           }
           else if(selectedLayer == "median-value"){
-            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Estimated Home value for {} Homeowners  </i></p><hr><b><p1>Tract: ' + value + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][34])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $659,300</p1><div class="wide-break"></div><p1>Nation: $320,900</p1>' 
-          }
-          else if(selectedLayer == "area_median_income"){
-            document.getElementById('pd').innerHTML = '<p>Tract';
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Estimated Median Home value for <b>'+ households +'</b> homeowner households </i></p><hr><b><p1>Tract: ' + value + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][71])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $659,300</p1><div class="wide-break"></div><p1>Nation: $320,900</p1>' 
           }
           else if(selectedLayer == "poverty_ratio"){
-            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Percentage of People In Federal Poverty </i></p><hr><b><p1>Tract: ' + rent + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][22])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
+            county_pov = Math.round((parseInt(countyData[countyfp][107]) + parseInt(countyData[countyfp][108])) / countyData[countyfp][107])
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>The federal poverty percentage of <b>'+ pop +' people. College Pop: ' + college_per + '%</b></i></p><hr><b><p1>Tract: ' + poverty + '%</p1></b><div class="wide-break"></div><p1> County: ' + county_pov + '%</p1><div class="wide-break"></div><p1> State: 12%</p1><div class="wide-break"></div><p1>Nation: 13%</p1>' 
           }
           else if(selectedLayer == "rent_burden_30"){
-            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Renters Paying More than 30% of Income on Rent </i></p><hr><b><p1>Tract: ' + rb_30 + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][37])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
+            var ratio_30 = Math.round(parseInt(countyData[countyfp][82]) / parseInt(countyData[countyfp][81]) * 100)
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Share of<b> ' + renters + ' renters </b> paying 30% or More of Income on Rent.</b></i></p><hr><b><p1>Tract: ' + rb_30 + '</p1></b><div class="wide-break"></div><p1> County: ' + ratio_30 + '%</p1><div class="wide-break"></div><p1> State: 50%</p1><div class="wide-break"></div><p1>Nation: 44%</p1>' 
           }
           else if(selectedLayer == "rent_burden_50"){
-            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Renters Paying More than 50% of Income on Rent  </i></p><hr><b><p1>Tract: ' + rb_50 + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][38])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
+            var ratio_50 = Math.round(parseInt(countyData[countyfp][83]) / parseInt(countyData[countyfp][81]) * 100)
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Share of<b> ' + renters + ' renters </b> paying 50% or More of Income on Rent.</b></i></p><hr><b><p1>Tract: ' + rb_50 + '</p1></b><div class="wide-break"></div><p1> County: ' + ratio_50 + '%</p1><div class="wide-break"></div><p1> State: 25%</p1><div class="wide-break"></div><p1>Nation: 23%</p1>' 
           }
           else if(selectedLayer == "owner_burden_30"){
-            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Homeowners Paying More than 30% Of Income on Costs </i></p><hr><b><p1>Tract: ' + ow_30 + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][41])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
+            var ratio_ow_30 = Math.round(parseInt(countyData[countyfp][74]) / parseInt(countyData[countyfp][73]) * 100)
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Share of<b> ' + homeowners + ' homeowners </b> paying 30% or More of Income on housing.</b></i></p><hr><b><p1>Tract: ' + ow_30 + '</p1></b><div class="wide-break"></div><p1> County: ' + ratio_ow_30 + '%</p1><div class="wide-break"></div><p1> State: 36%</p1><div class="wide-break"></div><p1>Nation: 24%</p1>' 
 
           }
           else{
-            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Homeowners Paying More than 50% Of Income on Costs  </i></p><hr><b><p1>Tract: ' + ow_50 + '</p1></b><div class="wide-break"></div><p1> County: $' + (parseInt(countyData[countyfp][42])).toLocaleString() + '</p1><div class="wide-break"></div><p1> State: $1,856</p1><div class="wide-break"></div><p1>Nation: $1,268</p1>' 
+            var ratio_ow_50 = Math.round(parseInt(countyData[countyfp][75]) / parseInt(countyData[countyfp][73]) * 100)
+            document.getElementById('pd').innerHTML = '<p>Tract: ' + tract_number + " - " + placeStr + '</p><p><i>Share of<b> ' + homeowners + ' homeowners </b> paying 50% or More of Income on housing.</b></i></p><hr><b><p1>Tract: ' + ow_50 + '</p1></b><div class="wide-break"></div><p1> County: ' + ratio_ow_50 + '%</p1><div class="wide-break"></div><p1> State: 14%</p1><div class="wide-break"></div><p1>Nation: 10%</p1>' 
           }
         }
       });
