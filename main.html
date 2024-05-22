@@ -67,19 +67,20 @@
   }
   .menus{
     position: fixed;
-    top: 210px;
-    right: 30px;
+    top: 265px;
+    right: 25px;
   }
   #firstDropdown {
-    background-color: #FFAA33;
+    background-color: #292929;
     border: 1px solid #ccc;
-    padding: 8px;
+    padding: 5px;
     font-size: 16px;
-    border-radius: 4px;
-    width: 230px;
+    border-radius: 14px;
+    width: 240px;
     cursor: pointer;
     outline: none;
     text-align: center;
+    color: white;
   }
   #map {
     position: absolute;
@@ -90,7 +91,7 @@
   #features {
     top: 0;
     height: 240px;
-    margin-top: 10px;
+    margin-top: 60px;
     width: 250px;
     background-color: #ffffff;
     outline-color: #0047AB;
@@ -240,6 +241,13 @@
           center: [-122.264,37.812],
           zoom: 9, // starting zoom
         });
+      //Geocoder
+      map.addControl(
+        new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          mapboxgl: mapboxgl
+        })
+      );
       map.getCanvas().style.cursor = 'default';
         //Scroll control
       var nav = new mapboxgl.NavigationControl();
